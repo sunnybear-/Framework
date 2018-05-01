@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    android:keyWidth="33.33333%p"：指定按键的宽度，保证键盘的每一列宽度一致
+    android:keyHeight="8%p"：设置键盘的高度
+    android:horizontalGap="1dp"：实现键盘每一列之间的分割线
+    android:verticalGap="1dp"：实现键盘每一行之间的分割线
+-->
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+          android:horizontalGap="1dp"
+          android:keyHeight="8%p"
+          android:keyWidth="33.33333%p"
+          android:verticalGap="1dp">
+
+    <Row>
+        <Key
+            android:codes="49"
+            android:keyLabel="1"/>
+        <Key
+            android:codes="50"
+            android:keyLabel="2"/>
+        <Key
+            android:codes="51"
+            android:keyLabel="3"/>
+    </Row>
+
+    <Row>
+        <Key
+            android:codes="52"
+            android:keyLabel="4"/>
+        <Key
+            android:codes="53"
+            android:keyLabel="5"/>
+        <Key
+            android:codes="54"
+            android:keyLabel="6"/>
+    </Row>
+
+    <Row>
+        <Key
+            android:codes="55"
+            android:keyLabel="7"/>
+        <Key
+            android:codes="56"
+            android:keyLabel="8"/>
+        <Key
+            android:codes="57"
+            android:keyLabel="9"/>
+    </Row>
+
+    <Row>
+        <Key
+            android:codes="-10"
+            android:keyLabel="@string/keyboard_complete"/>
+
+        <Key
+            android:codes="48"
+            android:keyLabel="0"/>
+
+        <Key
+            android:codes="-5"
+            android:keyIcon="@android:color/transparent"/>
+    </Row>
+
+</Keyboard>

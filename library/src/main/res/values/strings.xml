@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">library</string>
+
+    <string name="toast_message">Toast message</string>
+
+    <string name="pullToRefresh_prepare">下拉刷新</string>
+    <string name="pullToRefresh_recycle">松开立即刷新</string>
+    <string name="pullToRefresh_loading">正在加载,请等待...</string>
+    <string name="pullToRefresh_complete">加载完成</string>
+
+    <string name="icon">icon</string>
+
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+
+    <string name="settings">设置</string>
+    <string name="help">帮助</string>
+    <string name="string_help_text">
+        当前应用缺少必要权限。
+        \n\n请点击\"设置\"-\"权限\"-打开所需权限。
+        \n\n最后点击两次后退按钮，即可返回。
+    </string>
+    <string name="quit">退出</string>
+
+    <string name="complete">完成</string>
+    <string name="keyboard_complete"></string>
+
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+
+    <string name="pickerview_cancel">取消</string>
+    <string name="pickerview_submit">确定</string>
+    <string name="pickerview_year">年</string>
+    <string name="pickerview_month">月</string>
+    <string name="pickerview_day">日</string>
+    <string name="pickerview_hours">时</string>
+    <string name="pickerview_minutes">分</string>
+    <string name="pickerview_seconds">秒</string>
+
+</resources>

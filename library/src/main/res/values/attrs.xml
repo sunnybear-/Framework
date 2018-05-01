@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CleanableEditText">
+        <attr name="enableCopy" format="boolean"/>
+    </declare-styleable>
+    <!--QuickRecyclerView-->
+    <declare-styleable name="QuickRecyclerView">
+        <attr name="hasConsistItemType" format="boolean"/>
+        <attr name="hasItemDecoration" format="boolean"/>
+        <attr name="marginLeftItemDecoration" format="dimension"/>
+        <attr name="marginRightItemDecoration" format="dimension"/>
+        <attr name="dividerColor" format="color"/>
+        <attr name="dividerHeight" format="dimension"/>
+        <attr name="nestedScrolling" format="boolean"/>
+    </declare-styleable>
+    <!--PullToRefreshLayout-->
+    <declare-styleable name="PullToRefreshLayout">
+        <attr name="refreshPrepareText" format="string|reference"/>
+        <attr name="refreshRecycleText" format="string|reference"/>
+        <attr name="refreshLoadingText" format="string|reference"/>
+        <attr name="refreshCompleteText" format="string|reference"/>
+    </declare-styleable>
+    <!--PassWordEditText-->
+    <declare-styleable name="PasswordEditText">
+        <attr name="bound_line_color" format="color"/>
+        <attr name="parting_line_color" format="color"/>
+        <attr name="point_color" format="color"/>
+    </declare-styleable>
+    <!--PasswordKeyboardView-->
+    <declare-styleable name="PasswordKeyboardView">
+        <!-- 删除按键的图标 -->
+        <attr name="deleteDrawable" format="reference"/>
+        <!-- 删除按键图标的宽度 -->
+        <attr name="deleteWidth" format="dimension|reference"/>
+        <!-- 删除按键图标的高度 -->
+        <attr name="deleteHeight" format="dimension|reference"/>
+        <!-- 删除按键图标的颜色 -->
+        <attr name="deleteBackgroundColor" format="color|reference"/>
+        <!--完成按键字体颜色-->
+        <attr name="completeTextColor" format="color|reference"/>
+        <!--完成按键字体颜色-->
+        <attr name="completeTextSize" format="dimension|reference"/>
+    </declare-styleable>
+    <!--ProgressWheel-->
+    <declare-styleable name="ProgressWheel">
+        <attr name="progressIndeterminate" format="boolean"/>
+        <attr name="barColor" format="color"/>
+        <attr name="rimColor" format="color"/>
+        <attr name="rimWidth" format="dimension"/>
+        <attr name="spinSpeed" format="float"/>
+        <attr name="barSpinCycleTime" format="integer"/>
+        <attr name="circleRadius" format="dimension"/>
+        <attr name="fillRadius" format="boolean"/>
+        <attr name="barWidth" format="dimension"/>
+        <attr name="linearProgress" format="boolean"/>
+    </declare-styleable>
+    <!--Rotate3dAnimation-->
+    <declare-styleable name="Rotate3dAnimation">
+        <attr name="rollType" format="enum">
+            <enum name="x" value="0"/>
+            <enum name="y" value="1"/>
+            <enum name="z" value="2"/>
+        </attr>
+        <attr name="fromDeg" format="float"/>
+        <attr name="toDeg" format="float"/>
+        <attr name="pivotX" format="fraction"/>
+        <attr name="pivotY" format="fraction"/>
+    </declare-styleable>
+    <!--pickerview-->
+    <declare-styleable name="pickerview">
+        <attr name="wheelview_gravity">
+            <enum name="center" value="17"/>
+            <enum name="left" value="3"/>
+            <enum name="right" value="5"/>
+        </attr>
+        <attr name="wheelview_textSize" format="dimension"/>
+        <attr name="wheelview_textColorOut" format="color"/>
+        <attr name="wheelview_textColorCenter" format="color"/>
+        <attr name="wheelview_dividerColor" format="color"/>
+        <attr name="wheelview_lineSpacingMultiplier" format="float"/>
+    </declare-styleable>
+    <!--LazyViewPager-->
+    <declare-styleable name="LazyViewPager">
+        <attr name="init_lazy_item_offset" format="float"/>
+        <attr name="is_can_scroll" format="boolean"/>
+    </declare-styleable>
+</resources>

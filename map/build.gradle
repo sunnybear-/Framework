@@ -1,0 +1,34 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //地图
+    //    implementation 'com.amap.api:3dmap:latest.integration'
+    api 'com.amap.api:navi-3dmap:latest.integration'
+    api 'com.amap.api:location:latest.integration'
+    api 'com.amap.api:search:latest.integration'
+
+    //路由跳转
+    implementation("com.alibaba:arouter-api:$rootProject.ext.arouterApiVersion") {
+        exclude group: "com.android.support"
+    }
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompilerVersion"
+}

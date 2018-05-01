@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation "com.android.support:support-annotations:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+
+    api "tv.danmaku.ijk.media:ijkplayer-java:$rootProject.ext.ijkplayerVersion"
+    api "tv.danmaku.ijk.media:ijkplayer-armv7a:$rootProject.ext.ijkplayerVersion"
+    api "tv.danmaku.ijk.media:ijkplayer-arm64:$rootProject.ext.ijkplayerVersion"
+}
