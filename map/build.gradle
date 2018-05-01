@@ -27,8 +27,6 @@ dependencies {
     api 'com.amap.api:search:latest.integration'
 
     //路由跳转
-    implementation("com.alibaba:arouter-api:$rootProject.ext.arouterApiVersion") {
-        exclude group: "com.android.support"
-    }
+    implementation "com.alibaba:arouter-api:$rootProject.ext.arouterApiVersion"
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompilerVersion"
 }
