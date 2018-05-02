@@ -56,6 +56,7 @@ public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseV
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        //解除缓存View和当前ViewGroup的关联
         if (mFragmentView != null)
             ((ViewGroup) mFragmentView.getParent()).removeView(mFragmentView);
     }

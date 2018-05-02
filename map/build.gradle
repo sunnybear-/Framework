@@ -20,6 +20,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
     //地图
     //    implementation 'com.amap.api:3dmap:latest.integration'
     api 'com.amap.api:navi-3dmap:latest.integration'
@@ -27,6 +28,8 @@ dependencies {
     api 'com.amap.api:search:latest.integration'
 
     //路由跳转
-    implementation "com.alibaba:arouter-api:$rootProject.ext.arouterApiVersion"
+    implementation ("com.alibaba:arouter-api:$rootProject.ext.arouterApiVersion"){
+        exclude group:"com.android.support"
+    }
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompilerVersion"
 }
