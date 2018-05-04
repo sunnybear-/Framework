@@ -37,7 +37,5 @@ public class ActivityRecyclerViewModule extends BaseViewModule<RecyclerActivity,
                 return 3;
             }
         });
-
-//        mTabLayout.setupWithViewPager(mViewDataBinding.viewPager);
     }
 }

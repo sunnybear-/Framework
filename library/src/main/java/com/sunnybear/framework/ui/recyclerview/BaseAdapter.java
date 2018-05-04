@@ -177,7 +177,7 @@ public abstract class BaseAdapter<Item, VH extends BaseViewHolder> extends Deleg
      */
     public final void replaceAll(List<Item> items) {
         mItems.clear();
-        mItems.addAll(items);
+        mItems.addAll(items != null ? items : new ArrayList<Item>());
         notifyDataSetChanged();
     }
 

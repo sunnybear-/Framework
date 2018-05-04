@@ -4,10 +4,8 @@ import com.sunnybear.framework.adapter.RecyclerAdapter;
 import com.sunnybear.framework.databinding.FragmentRecyclerBinding;
 import com.sunnybear.framework.library.base.BaseViewModule;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
 
 /**
  * <p>
@@ -26,13 +24,10 @@ public class FragmentRecyclerViewModule extends BaseViewModule<RecyclerFragment,
     }
 
     private List<String> getDatas() {
-        return Flowable.range(1, 100)
-                .map(new Function<Integer, String>() {
-                    @Override
-                    public String apply(Integer integer) throws Exception {
-                        return "内容" + integer;
-                    }
-                })
-                .toList().blockingGet();
+        List<String> datas = new ArrayList<>();
+        for (int i = 1; i <= 100; i++) {
+            datas.add("内容" + i);
+        }
+        return datas;
     }
 }
