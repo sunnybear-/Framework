@@ -236,7 +236,7 @@ public class AMapFragment extends SupportMapFragment
     @Override
     public void onMyLocationChange(Location location) {
         if (mOnMapCallback != null)
-            mOnMapCallback.onLocation(location);
+            mOnMapCallback.onMyLocation(location);
     }
 
     /**
@@ -320,11 +320,11 @@ public class AMapFragment extends SupportMapFragment
     public interface OnMapCallback {
 
         /**
-         * 当前位置回调
+         * 当前我的位置回调
          *
          * @param location
          */
-        void onLocation(Location location);
+        void onMyLocation(Location location);
 
         /**
          * Marker标记点点击回调

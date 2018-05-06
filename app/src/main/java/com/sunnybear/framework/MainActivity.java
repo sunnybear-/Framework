@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, ActivityMain
 
         mAMapFragment.setOnMapCallback(new AMapFragment.OnMapCallback() {
             @Override
-            public void onLocation(Location location) {
+            public void onMyLocation(Location location) {
                 Logger.i(location.toString());
             }
 
