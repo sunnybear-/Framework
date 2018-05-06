@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.sunnybear.framework.R;
 import com.sunnybear.framework.library.eventbus.EventBusMessage;
-import com.sunnybear.framework.library.eventbus.ObservableEventBusMessage;
 import com.sunnybear.framework.tools.ActivityStackManager;
 import com.sunnybear.framework.tools.AppUtils;
 import com.sunnybear.framework.tools.KeyboardUtils;
@@ -33,7 +32,8 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
  * 基础FragmentActivity,主管模组分发
  * Created by chenkai.gu on 2018/1/14.
  */
-public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseViewModule> extends RxAppCompatActivity implements Presenter {
+public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseViewModule> extends RxAppCompatActivity
+        implements Presenter {
 
     protected Context mContext;
     private VDB mViewDataBinding;
@@ -51,6 +51,8 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
         mContext = this;
         mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         mViewModule = bindingViewModule(mViewDataBinding);
+        //添加LifecycleObserver
+        getLifecycle().addObserver(mViewModule);
         /*设置Toolbar*/
         mToolbar = mViewDataBinding.getRoot().findViewById(R.id.toolbar);
         mToolTitle = mViewDataBinding.getRoot().findViewById(R.id.toolbar_title);
@@ -186,16 +188,6 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
     @Deprecated
     public <T> void onSubscriberEvent(EventBusMessage<T> message) {
 
-    }
-
-    /**
-     * 观察者EventBus接收方法
-     *
-     * @param message
-     * @param <T>
-     */
-    public <T> void onSubscriberEvent(ObservableEventBusMessage<T> message) {
-        mViewModule.disposeEvent(message.getMessageTag(), message.getMessageBody());
     }
 
     @Override

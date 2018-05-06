@@ -15,16 +15,28 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        manifestPlaceholders = [
+                AMAP_API_KEY: "3a82113bb69cb64a8d832ada1eb2415e"
+        ]
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
             }
         }
     }
+    signingConfigs {
+        release {
+            storeFile file("../framework.jks")
+            storePassword "sunnybear123"
+            keyAlias "sunnybear"
+            keyPassword "sunnybear123"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -32,6 +44,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':library')
-    implementation project(':qrcode')
+//    implementation project(':qrcode')
     implementation project(':map')
+
+    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
 }

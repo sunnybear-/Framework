@@ -11,8 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--高德地图设置key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="${AMAP_API_KEY}"/>
+
         <activity
-            android:name=".RecyclerActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,9 +26,8 @@
             </intent-filter>
         </activity>
 
-        <!--<activity
-            android:name=".RecyclerActivity"
-            android:screenOrientation="portrait"/>-->
+        <activity android:name=".LocationActivity"
+                  android:screenOrientation="portrait"/>
 
     </application>
 

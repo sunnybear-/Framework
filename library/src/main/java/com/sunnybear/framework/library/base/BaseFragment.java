@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sunnybear.framework.library.eventbus.EventBusMessage;
-import com.sunnybear.framework.library.eventbus.ObservableEventBusMessage;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 /**
@@ -45,6 +44,7 @@ public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseV
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         mViewModule = bindingViewModule(mViewDataBinding);
+        getLifecycle().addObserver(mViewModule);
         mFragmentView = mViewDataBinding.getRoot();
         ViewGroup parent = (ViewGroup) mFragmentView.getParent();
         if (parent != null)
@@ -94,15 +94,5 @@ public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseV
     @Deprecated
     public <T> void onSubscriberEvent(EventBusMessage<T> message) {
 
-    }
-
-    /**
-     * 观察者EventBus接收方法
-     *
-     * @param message
-     * @param <T>
-     */
-    public <T> void onSubscriberEvent(ObservableEventBusMessage<T> message) {
-        mViewModule.disposeEvent(message.getMessageTag(), message.getMessageBody());
     }
 }
