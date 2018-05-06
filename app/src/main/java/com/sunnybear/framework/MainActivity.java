@@ -40,6 +40,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, ActivityMain
                 .withBoolean(AMapFragment.KEY_ZOOM_CONTROLS, true)
 //                .withInt(AMapFragment.KEY_MAP_TYPE, AMap.MAP_TYPE_SATELLITE)
                 .navigation();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container_map, mAMapFragment).commit();
 
         mAMapFragment.setOnMapCallback(new AMapFragment.OnMapCallback() {
             @Override
@@ -59,23 +61,5 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, ActivityMain
                 mAMapFragment.showTrafficEnabled(true);
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (!mAMapFragment.isAdded())
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container_map, mAMapFragment).commitAllowingStateLoss();
-        else
-            getSupportFragmentManager().beginTransaction()
-                    .show(mAMapFragment).commitAllowingStateLoss();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        getSupportFragmentManager().beginTransaction()
-                .hide(mAMapFragment).commitAllowingStateLoss();
     }
 }
