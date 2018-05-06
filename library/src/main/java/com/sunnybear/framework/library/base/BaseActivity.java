@@ -1,6 +1,5 @@
 package com.sunnybear.framework.library.base;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -25,7 +24,6 @@ import com.sunnybear.framework.tools.KeyboardUtils;
 import com.sunnybear.framework.tools.PhoneUtil;
 import com.sunnybear.framework.tools.Toasty;
 import com.sunnybear.framework.tools.log.Logger;
-import com.sunnybear.framework.ui.dialog.FancyAlertDialog;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 /**
@@ -221,29 +219,6 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
             return !(event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom);
         }
         return false;
-    }
-
-    /**
-     * 退出app的提示框
-     */
-    protected void exitDialog() {
-        FancyAlertDialog.getDialogBuilder(this)
-                .body(R.string.exit_message_dialog)
-                .negativeButtonText(R.string.cancel)
-                .setOnNegativeClickListener(new FancyAlertDialog.OnNegativeClickListener() {
-                    @Override
-                    public void onClick(android.view.View v, Dialog dialog) {
-                        dialog.dismiss();
-                    }
-                })
-                .positiveButtonText(R.string.confirm)
-                .setOnPositiveClickListener(new FancyAlertDialog.OnPositiveClickListener() {
-                    @Override
-                    public void onClick(android.view.View v, Dialog dialog) {
-                        ActivityStackManager.getInstance().finishAllActivity();
-                        AppUtils.gc(mContext);
-                    }
-                }).buttonsGravity(FancyAlertDialog.PanelGravity.CENTER).show();
     }
 
     /*退出时间*/
