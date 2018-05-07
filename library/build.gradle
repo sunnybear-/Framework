@@ -83,8 +83,6 @@ dependencies {
         exclude group: "com.android.support"
 //        exclude group: "io.reactivex.rxjava2"
     }
-    //对话框
-    api 'com.geniusforapp.fancydialog:FancyDialog:0.1.4'
     //图库选择
     api 'com.caimuhao:rxpicker:1.1.5'
     //loading布局视图
@@ -93,4 +91,6 @@ dependencies {
     api 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     //viewpager圆点指示器
     api 'me.relex:circleindicator:1.2.2@aar'
+
+    api 'android.arch.lifecycle:extensions:1.1.1'
 }

@@ -1,23 +1,18 @@
 package com.sunnybear.library.map;
 
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.UiSettings;
@@ -36,8 +31,11 @@ import java.util.List;
  */
 @Route(path = Constant.ROUTER_MAP)
 public class AMapFragment extends SupportMapFragment
-        implements AMapLocationListener, LocationSource, AMap.OnMarkerClickListener {
+        implements AMap.OnMyLocationChangeListener, AMap.OnMarkerClickListener, AMap.OnMapLoadedListener {
 
+    //定位间隔时间
+    public static final String KEY_LOCATION_INTERVAL = "key_location_interval";
+    private long mLocationInterval;
     //定位icon
     public static final String KEY_DRAWABLE_LOCATION = "key_drawable_location";
     private int mLocationIconRes = -1;
@@ -68,6 +66,9 @@ public class AMapFragment extends SupportMapFragment
     //滑动手势
     public static final String KEY_SCROLL_GESTURES = "key_scroll_gestures";
     private boolean isScrollGestures;
+    //地图类型
+    public static final String KEY_MAP_TYPE = "key_map_type";
+    private int mMapType;
 
     private View mFragmentView;
 
@@ -76,11 +77,6 @@ public class AMapFragment extends SupportMapFragment
 
     private OnMapCallback mOnMapCallback;
 
-    //定位服务类。此类提供单次定位、持续定位、地理围栏、最后位置相关功能
-    private AMapLocationClient mAMapLocationClient;
-    private OnLocationChangedListener mOnLocationChangedListener;
-    //定位参数设置
-    private AMapLocationClientOption mAMapLocationClientOption;
     //marker标记点
     private List<Marker> mMarkers;
 
@@ -93,6 +89,7 @@ public class AMapFragment extends SupportMapFragment
         super.onCreate(bundle);
         Bundle args = getArguments();
         if (args != null) {
+            mLocationInterval = args.getLong(KEY_LOCATION_INTERVAL, Constant.LOCATION_INTERVAL);//定位间隔时间
             mLocationIconRes = args.getInt(KEY_DRAWABLE_LOCATION);//定位icon
             mZoomLevel = args.getInt(KEY_ZOOM_LEVEL, Constant.ZOOM);//初始缩放等级
             isScaleControls = args.getBoolean(KEY_SCALE_CONTROLS, false);//标尺开关
@@ -101,8 +98,9 @@ public class AMapFragment extends SupportMapFragment
             isLocationButton = args.getBoolean(KEY_LOCATION_BUTTON, false); //定位按钮
             isZoomGestures = args.getBoolean(KEY_ZOOM_GESTURES, true);//缩放手势
             isTiltGestures = args.getBoolean(KEY_TILT_GESTURES, false);//倾斜手势
-            isRotateGestures = args.getBoolean(KEY_ROTATE_GESTURES, true);//旋转手势
+            isRotateGestures = args.getBoolean(KEY_ROTATE_GESTURES, false);//旋转手势
             isScrollGestures = args.getBoolean(KEY_SCROLL_GESTURES, true);//滑动手势
+            mMapType = args.getInt(KEY_MAP_TYPE, AMap.MAP_TYPE_NORMAL);
         }
         mMarkers = new ArrayList<>();
     }
@@ -121,15 +119,9 @@ public class AMapFragment extends SupportMapFragment
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (mAMapLocationClient != null)
-            mAMapLocationClient.startLocation();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
+        startLocation();
         mMapView.onResume();
     }
 
@@ -141,23 +133,16 @@ public class AMapFragment extends SupportMapFragment
 
     @Override
     public void onStop() {
-        if (mAMapLocationClient != null)
-            mAMapLocationClient.stopLocation();
         super.onStop();
+        stopLocation();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mMapView.onDestroy();
         if (mFragmentView != null)
             ((ViewGroup) mFragmentView.getParent()).removeView(mFragmentView);
-        mMapView.onDestroy();
-        //销毁定位客户端
-        if (mAMapLocationClient != null) {
-            mAMapLocationClient.onDestroy();
-            mAMapLocationClient = null;
-            mAMapLocationClientOption = null;
-        }
     }
 
     @Override
@@ -167,40 +152,53 @@ public class AMapFragment extends SupportMapFragment
     }
 
     /**
+     * 启动定位
+     */
+    public void startLocation() {
+        if (!isStartLocation())
+            //设置为true表示启动显示定位蓝点,false表示隐藏定位蓝点并不进行定位,默认是false。
+            mAMap.setMyLocationEnabled(true);
+    }
+
+    /**
+     * 停止定位
+     */
+    public void stopLocation() {
+        if (isStartLocation())
+            //设置为true表示启动显示定位蓝点,false表示隐藏定位蓝点并不进行定位,默认是false。
+            mAMap.setMyLocationEnabled(false);
+    }
+
+    /**
+     * 是否开启定位
+     *
+     * @return
+     */
+    private boolean isStartLocation() {
+        if (mAMap != null)
+            return mAMap.isMyLocationEnabled();
+        return false;
+    }
+
+    /**
      * 初始化map
      */
     private void initMap() {
         if (mAMap == null) {
             mAMap = mMapView.getMap();
             initMyLocation();
-            initLocationClient();
+            mAMap.setMapType(mMapType);//设置地图种类
             mAMap.setOnMarkerClickListener(this);
+            mAMap.setOnMyLocationChangeListener(this);
+            mAMap.setOnMapLoadedListener(this);
         }
-    }
-
-    private void initLocationClient() {
-        mAMapLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
-        mAMapLocationClient.setLocationListener(this);
-        //初始化定位参数
-        mAMapLocationClientOption = new AMapLocationClientOption();
-        //设置定位模式为高精度模式,Battery_Saving为低功耗模式,Device_Sensors是仅设备模式
-        mAMapLocationClientOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        //设置是否返回地址信息（默认返回地址信息）
-        mAMapLocationClientOption.setNeedAddress(true);
-        //设置定位间隔,单位毫秒,默认为2000ms
-        mAMapLocationClientOption.setInterval(Constant.LOCATION_INTERVAL);
-        //给定位客户端对象设置定位参数
-        mAMapLocationClient.setLocationOption(mAMapLocationClientOption);
     }
 
     /**
      * 初始化我的定位
      */
     private void initMyLocation() {
-        //设置定位监听
-        mAMap.setLocationSource(this);
-        //设置为true表示系统定位按钮显示并响应点击,false表示隐藏,默认是false
-        mAMap.setMyLocationEnabled(true);
+        startLocation();
         mAMap.setMyLocationStyle(getMyLocationStyle());
         mAMap.moveCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
         UiSettings settings = mAMap.getUiSettings();
@@ -221,8 +219,10 @@ public class AMapFragment extends SupportMapFragment
     public MyLocationStyle getMyLocationStyle() {
         //初始化定位蓝点样式类
         MyLocationStyle myLocationStyle = new MyLocationStyle();
+        //设置连续定位模式下的定位间隔,只在连续定位模式下生效,单次定位模式下不会生效.单位为毫秒.
+        myLocationStyle.interval(mLocationInterval);
         myLocationStyle.strokeColor(Color.TRANSPARENT);//设置定位蓝点精度圆圈的边框颜色的方法
-//        myLocationStyle.strokeWidth(5);//设置定位蓝点精度圈的边框宽度的方法
+        //myLocationStyle.strokeWidth(5);//设置定位蓝点精度圈的边框宽度的方法
         myLocationStyle.radiusFillColor(Color.TRANSPARENT);//设置定位蓝点精度圆圈的填充颜色的方法
         //连续定位、且将视角移动到地图中心点,定位点依照设备方向旋转,并且会跟随设备移动.(1秒1次定位)如果不设置myLocationType,默认也会执行此种模式.
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
@@ -233,19 +233,24 @@ public class AMapFragment extends SupportMapFragment
         return myLocationStyle;
     }
 
+    @Override
+    public void onMyLocationChange(Location location) {
+        if (mOnMapCallback != null)
+            mOnMapCallback.onMyLocation(location);
+    }
+
     /**
      * 添加marker标签
      *
      * @param latLng
-     * @param position
      * @param markerIcon
      * @return
      */
-    public void addMarkerOptions(LatLng latLng, int position, int markerIcon) {
+    public void addMarkerOptions(LatLng latLng, String title, int markerIcon) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        if (position != -1)
-            markerOptions.title(String.valueOf(position));
+        if (!TextUtils.isEmpty(title))
+            markerOptions.title(title);
         if (markerIcon != -1)
             markerOptions.icon(BitmapDescriptorFactory.fromResource(markerIcon));
         //设置marker平贴地图效果
@@ -260,18 +265,7 @@ public class AMapFragment extends SupportMapFragment
      * @return
      */
     public void addMarkerOptions(LatLng latLng) {
-        addMarkerOptions(latLng, -1, -1);
-    }
-
-    /**
-     * 添加marker标签
-     *
-     * @param latLng
-     * @param markerIcon
-     * @return
-     */
-    public void addMarkerOptions(LatLng latLng, int markerIcon) {
-        addMarkerOptions(latLng, -1, markerIcon);
+        addMarkerOptions(latLng, null, -1);
     }
 
     /**
@@ -289,9 +283,8 @@ public class AMapFragment extends SupportMapFragment
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        String title = marker.getTitle();
-        if (mOnMapCallback != null && TextUtils.isDigitsOnly(title))
-            mOnMapCallback.onMarkerClick(Integer.parseInt(title));
+        if (mOnMapCallback != null)
+            mOnMapCallback.onMarkerClick(marker);
         return true;
     }
 
@@ -302,38 +295,23 @@ public class AMapFragment extends SupportMapFragment
      */
     public void moveMap(LatLng location) {
         if (mAMap != null)
-//            mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, Constant.ZOOM));
             mAMap.moveCamera(CameraUpdateFactory.newLatLng(location));
     }
 
-    @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
-        if (mOnLocationChangedListener != null && aMapLocation != null)
-            if (aMapLocation.getErrorCode() == 0) {
-                mOnLocationChangedListener.onLocationChanged(aMapLocation);//显示系统小蓝点
-                if (mOnMapCallback != null)
-                    mOnMapCallback.onLocation(aMapLocation);
-            } else {
-                //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
-                Log.e("AMapFragment", "location Error, ErrCode:"
-                        + aMapLocation.getErrorCode() + ", errInfo:"
-                        + aMapLocation.getErrorInfo());
-            }
+    /**
+     * 是否显示路况
+     *
+     * @param isShow
+     */
+    public void showTrafficEnabled(boolean isShow) {
+        if (mAMap != null)
+            mAMap.setTrafficEnabled(isShow);
     }
 
     @Override
-    public void activate(OnLocationChangedListener onLocationChangedListener) {
-        mOnLocationChangedListener = onLocationChangedListener;
-    }
-
-    @Override
-    public void deactivate() {
-        mOnLocationChangedListener = null;
-        if (mAMapLocationClient != null) {
-            mAMapLocationClient.stopLocation();
-            mAMapLocationClient.onDestroy();
-        }
-        mAMapLocationClient = null;
+    public void onMapLoaded() {
+        if (mOnMapCallback != null)
+            mOnMapCallback.onMapLoadComplete();
     }
 
     /**
@@ -342,17 +320,22 @@ public class AMapFragment extends SupportMapFragment
     public interface OnMapCallback {
 
         /**
-         * 当前位置回调
+         * 当前我的位置回调
          *
          * @param location
          */
-        void onLocation(AMapLocation location);
+        void onMyLocation(Location location);
 
         /**
          * Marker标记点点击回调
          *
-         * @param position 点击项目的位置
+         * @param marker 点击的标记点
          */
-        void onMarkerClick(int position);
+        void onMarkerClick(Marker marker);
+
+        /**
+         * 地图加载完成回调
+         */
+        void onMapLoadComplete();
     }
 }

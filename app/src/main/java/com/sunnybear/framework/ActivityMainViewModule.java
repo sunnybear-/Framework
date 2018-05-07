@@ -2,8 +2,6 @@ package com.sunnybear.framework;
 
 import android.view.View;
 
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.google.zxing.util.Constant;
 import com.sunnybear.framework.databinding.ActivityMainBinding;
 import com.sunnybear.framework.library.base.BaseViewModule;
 
@@ -26,6 +24,6 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
     @Override
     public void onClick(View v) {
         //发起路由跳转
-        ARouter.getInstance().build(Constant.ROUTER_QRCODE).navigation();
+//        ARouter.getInstance().build(Constant.ROUTER_QRCODE).navigation();
     }
 }

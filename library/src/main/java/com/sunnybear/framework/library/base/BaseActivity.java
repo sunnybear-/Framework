@@ -1,6 +1,5 @@
 package com.sunnybear.framework.library.base;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -19,21 +18,20 @@ import android.widget.Toast;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.sunnybear.framework.R;
 import com.sunnybear.framework.library.eventbus.EventBusMessage;
-import com.sunnybear.framework.library.eventbus.ObservableEventBusMessage;
 import com.sunnybear.framework.tools.ActivityStackManager;
 import com.sunnybear.framework.tools.AppUtils;
 import com.sunnybear.framework.tools.KeyboardUtils;
 import com.sunnybear.framework.tools.PhoneUtil;
 import com.sunnybear.framework.tools.Toasty;
 import com.sunnybear.framework.tools.log.Logger;
-import com.sunnybear.framework.ui.dialog.FancyAlertDialog;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 /**
  * 基础FragmentActivity,主管模组分发
  * Created by chenkai.gu on 2018/1/14.
  */
-public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseViewModule> extends RxAppCompatActivity implements Presenter {
+public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseViewModule> extends RxAppCompatActivity
+        implements Presenter {
 
     protected Context mContext;
     private VDB mViewDataBinding;
@@ -51,6 +49,8 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
         mContext = this;
         mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         mViewModule = bindingViewModule(mViewDataBinding);
+        //添加LifecycleObserver
+        getLifecycle().addObserver(mViewModule);
         /*设置Toolbar*/
         mToolbar = mViewDataBinding.getRoot().findViewById(R.id.toolbar);
         mToolTitle = mViewDataBinding.getRoot().findViewById(R.id.toolbar_title);
@@ -188,16 +188,6 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
 
     }
 
-    /**
-     * 观察者EventBus接收方法
-     *
-     * @param message
-     * @param <T>
-     */
-    public <T> void onSubscriberEvent(ObservableEventBusMessage<T> message) {
-        mViewModule.disposeEvent(message.getMessageTag(), message.getMessageBody());
-    }
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         //判断软键盘是否展开
@@ -229,29 +219,6 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
             return !(event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom);
         }
         return false;
-    }
-
-    /**
-     * 退出app的提示框
-     */
-    protected void exitDialog() {
-        FancyAlertDialog.getDialogBuilder(this)
-                .body(R.string.exit_message_dialog)
-                .negativeButtonText(R.string.cancel)
-                .setOnNegativeClickListener(new FancyAlertDialog.OnNegativeClickListener() {
-                    @Override
-                    public void onClick(android.view.View v, Dialog dialog) {
-                        dialog.dismiss();
-                    }
-                })
-                .positiveButtonText(R.string.confirm)
-                .setOnPositiveClickListener(new FancyAlertDialog.OnPositiveClickListener() {
-                    @Override
-                    public void onClick(android.view.View v, Dialog dialog) {
-                        ActivityStackManager.getInstance().finishAllActivity();
-                        AppUtils.gc(mContext);
-                    }
-                }).buttonsGravity(FancyAlertDialog.PanelGravity.CENTER).show();
     }
 
     /*退出时间*/

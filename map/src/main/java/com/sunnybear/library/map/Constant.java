@@ -16,5 +16,5 @@ public final class Constant {
     /**
      * 定位间隔时间
      */
-    public static final int LOCATION_INTERVAL = 60000;
+    public static final int LOCATION_INTERVAL = 1000;
 }
