@@ -9,6 +9,11 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
     lintOptions {
         checkReleaseBuilds false
@@ -17,12 +22,13 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:support-annotations:$rootProject.ext.supportLibraryVersion"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-
-    api("tv.danmaku.ijk.media:ijkplayer-java:$rootProject.ext.ijkplayerVersion") {
+    //JsBridge
+    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+    //路由跳转
+    implementation("com.alibaba:arouter-api:$rootProject.ext.arouterApiVersion") {
         exclude group: "com.android.support"
     }
-    api "tv.danmaku.ijk.media:ijkplayer-armv7a:$rootProject.ext.ijkplayerVersion"
-    api "tv.danmaku.ijk.media:ijkplayer-arm64:$rootProject.ext.ijkplayerVersion"
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompilerVersion"
 }

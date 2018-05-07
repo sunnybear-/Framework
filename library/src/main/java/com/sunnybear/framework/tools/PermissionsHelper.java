@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
@@ -35,24 +34,6 @@ public final class PermissionsHelper {
     public PermissionsHelper permissions(String... permissions) {
         mPermissionObservable = mRxPermissions.requestEach(permissions);
         return this;
-    }
-
-    /**
-     * 申请权限
-     *
-     * @param lifecycleTransformer      生命周期
-     * @param onCheckPermissionCallback 检查权限回调监听
-     */
-    public void apply(LifecycleTransformer<Permission> lifecycleTransformer, @Nullable final onCheckPermissionCallback onCheckPermissionCallback) {
-        mPermissionObservable
-                .compose(lifecycleTransformer)
-                .subscribe(new Consumer<Permission>() {
-                    @Override
-                    public void accept(Permission permission) throws Exception {
-                        if (onCheckPermissionCallback != null)
-                            onCheckPermissionCallback.onCheckPermission(permission);
-                    }
-                });
     }
 
     /**

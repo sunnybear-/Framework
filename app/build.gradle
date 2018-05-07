@@ -49,4 +49,5 @@ dependencies {
     implementation project(':library')
 //    implementation project(':qrcode')
     implementation project(':map')
+    implementation project(':webkit')
 }

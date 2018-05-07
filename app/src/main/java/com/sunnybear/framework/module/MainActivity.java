@@ -35,10 +35,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, ActivityMain
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("地图");
         mViewModule.init();
 
         mAMapFragment = (AMapFragment) ARouter.getInstance()
-                .build(Constant.ROUTER_MAP)
+                .build(Constant.ROUTER_MAP, Constant.GROUP)
                 .withBoolean(AMapFragment.KEY_LOCATION_BUTTON, true)
                 .withBoolean(AMapFragment.KEY_COMPASS, true)
                 .withBoolean(AMapFragment.KEY_SCALE_CONTROLS, true)
@@ -61,7 +62,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, ActivityMain
             public void onMarkerClick(Marker marker) {
                 Logger.i(marker);
                 StartHelper.with(mContext)
-                        .startActivity(LocationActivity.class);
+                        .startActivity(WebActivity.class);
             }
 
             @Override

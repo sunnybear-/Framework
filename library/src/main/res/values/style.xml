@@ -39,8 +39,12 @@
         <item name="android:src">@drawable/ic_launcher</item>
     </style>
 
-    <!--Toolbar基本样式-->
-    <!--Toolbar标题文字样式-->
+    <!--Toolbar菜单样式-->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:actionMenuTextColor">@color/color_222222</item>
+        <item name="android:textColor">@color/color_222222</item>
+        <item name="android:textSize">@dimen/font_size_16</item>
+    </style>
 
     <!--底部标题栏上提醒文字样式-->
     <style name="BadgeText" parent="TextAppearance.AppCompat.Body2">

@@ -44,6 +44,7 @@ public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseV
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         mViewModule = bindingViewModule(mViewDataBinding);
+        getLifecycle().addObserver(mViewModule);
         mFragmentView = mViewDataBinding.getRoot();
         ViewGroup parent = (ViewGroup) mFragmentView.getParent();
         if (parent != null)
@@ -58,6 +59,12 @@ public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseV
         //解除缓存View和当前ViewGroup的关联
         if (mFragmentView != null)
             ((ViewGroup) mFragmentView.getParent()).removeView(mFragmentView);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getLifecycle().removeObserver(mViewModule);
     }
 
     /**

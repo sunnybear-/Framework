@@ -9,12 +9,15 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
             }
         }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 }
 
@@ -28,8 +31,8 @@ dependencies {
     api 'com.amap.api:search:latest.integration'
 
     //路由跳转
-    implementation ("com.alibaba:arouter-api:$rootProject.ext.arouterApiVersion"){
-        exclude group:"com.android.support"
+    implementation("com.alibaba:arouter-api:$rootProject.ext.arouterApiVersion") {
+        exclude group: "com.android.support"
     }
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompilerVersion"
 }

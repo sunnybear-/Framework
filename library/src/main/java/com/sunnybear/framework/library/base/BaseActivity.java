@@ -24,7 +24,6 @@ import com.sunnybear.framework.tools.AppUtils;
 import com.sunnybear.framework.tools.KeyboardUtils;
 import com.sunnybear.framework.tools.PhoneUtil;
 import com.sunnybear.framework.tools.Toasty;
-import com.sunnybear.framework.tools.log.Logger;
 
 /**
  * 基础FragmentActivity,主管模组分发
@@ -49,6 +48,7 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
         mContext = this;
         mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         mViewModule = bindingViewModule(mViewDataBinding);
+        getLifecycle().addObserver(mViewModule);
         /*设置Toolbar*/
         mToolbar = mViewDataBinding.getRoot().findViewById(R.id.toolbar);
         mToolTitle = mViewDataBinding.getRoot().findViewById(R.id.toolbar_title);
@@ -77,8 +77,6 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
 
         /*添加Activity到栈管理*/
         ActivityStackManager.getInstance().addActivity(this);
-
-        Logger.d("ActivityStack", ActivityStackManager.getInstance().printStack());
     }
 
     /**
@@ -97,8 +95,8 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
     @Override
     protected void onDestroy() {
         ActivityStackManager.getInstance().removeActivity(this);
-        Logger.d("ActivityStack", ActivityStackManager.getInstance().printStack());
         super.onDestroy();
+        getLifecycle().removeObserver(mViewModule);
     }
 
     /**

@@ -26,8 +26,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".module.LocationActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.LocationActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".module.WebActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

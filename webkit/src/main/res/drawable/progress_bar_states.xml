@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@android:id/background">
+        <shape>
+            <!-- 个人感觉radius这个属性不要，这个属性的意思是对进度条进行圆角 -->
+            <corners android:radius="2dp"/>
+            <gradient
+                android:angle="270"
+                android:centerColor="#e3e3e3"
+                android:endColor="#e6e6e6"
+                android:startColor="#c8c8c8"/>
+        </shape>
+    </item>
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <!-- 个人感觉radius这个属性不要，这个属性的意思是对进度条进行圆角 -->
+                <corners android:radius="2dp"/>
+                <gradient
+                    android:angle="270"
+                    android:centerColor="#4aea2f"
+                    android:endColor="#31ce15"
+                    android:startColor="#5fec46"/>
+            </shape>
+        </clip>
+    </item>
+</layer-list>

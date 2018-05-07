@@ -1,10 +1,12 @@
 package com.sunnybear.library.map;
 
 /**
- * <p>
+ * 地图常量
  * Created by chenkai.gu on 2018/3/23.
  */
 public final class Constant {
+
+    public static final String GROUP = "map";
 
     public static final String ROUTER_MAP = "/router/library/map";
 
