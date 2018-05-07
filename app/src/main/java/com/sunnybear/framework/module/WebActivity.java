@@ -45,7 +45,7 @@ public class WebActivity extends BaseActivity<ActivityWebBinding, ActivityWebVie
     @Override
     protected void onStart() {
         super.onStart();
-        mWebKitFragment.load("http://www.baidu.com");
+        mWebKitFragment.load("file:///android_asset/index.html");
     }
 
     @Override
