@@ -21,28 +21,42 @@ android {
 }
 
 dependencies {
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     api "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-    implementation "com.android.support:support-annotations:$rootProject.ext.supportLibraryVersion"
     api "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    api "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
     implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'
     implementation "com.android.support:gridlayout-v7:$rootProject.ext.supportLibraryVersion"
-    api "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
 //    implementation "com.android.support:palette-v7:$rootProject.ext.supportLibraryVersion"
     //响应式布局
     api "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintLayoutVersion"
+    //Lifecycle组件
+    api "android.arch.lifecycle:runtime:$rootProject.ext.lifecycleVersion"
+    annotationProcessor "android.arch.lifecycle:$rootProject.ext.lifecycleVersion"
     //okgo网络请求
     api 'com.lzy.net:okgo:3.0.4'
 //    api 'com.lzy.net:okrx2:2.0.2'
 //    api 'com.lzy.net:okserver:2.0.5'
     api 'com.alibaba:fastjson:1.2.46'
     implementation 'com.google.code.gson:gson:2.8.2'
-    //rxjava绑定Activity和Fragment生命周期组件
-    api "com.trello.rxlifecycle2:rxlifecycle:$rootProject.ext.rxlifecycleVersion"
-    api "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.ext.rxlifecycleVersion"
+    //rxJava&rxAndroid
+    api 'io.reactivex.rxjava2:rxjava:2.1.3'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    //RxBinding
+    api("com.jakewharton.rxbinding2:rxbinding:$rootProject.ext.rxbindingVersion") {
+        exclude group: "com.android.support"
+        exclude group: "io.reactivex.rxjava2"
+    }
+    //图库选择
+    api('com.caimuhao:rxpicker:1.1.5') {
+        exclude group: "io.reactivex.rxjava2"
+    }
+    //权限申请
+    api('com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar') {
+        exclude group: "io.reactivex.rxjava2"
+    }
     //EventBus
     api 'org.greenrobot:eventbus:3.1.1'
     //glide图片加载和转换器
@@ -61,10 +75,6 @@ dependencies {
     api "com.alibaba:arouter-api:$rootProject.ext.arouterApiVersion"
     //图片压缩工具
     api 'com.zxy.android:tiny:0.1.0'
-    //权限申请
-    api('com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar') {
-        exclude group: "io.reactivex.rxjava2"
-    }
     //文件储存
     api('com.orhanobut:hawk:2.0.1') {
         exclude group: "com.google.code.gson"
@@ -78,19 +88,10 @@ dependencies {
     api 'in.srain.cube:ultra-ptr:1.0.11'
     //底部导航栏
     api 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
-    //RxBinding
-    api("com.jakewharton.rxbinding2:rxbinding:$rootProject.ext.rxbindingVersion") {
-        exclude group: "com.android.support"
-//        exclude group: "io.reactivex.rxjava2"
-    }
-    //图库选择
-    api 'com.caimuhao:rxpicker:1.1.5'
     //loading布局视图
 //    api 'com.github.czy1121:loadinglayout:1.0.1'
     //沉浸式状态栏
     api 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     //viewpager圆点指示器
     api 'me.relex:circleindicator:1.2.2@aar'
-
-    api 'android.arch.lifecycle:extensions:1.1.1'
 }

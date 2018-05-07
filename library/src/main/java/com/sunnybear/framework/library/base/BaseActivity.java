@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,13 +25,12 @@ import com.sunnybear.framework.tools.KeyboardUtils;
 import com.sunnybear.framework.tools.PhoneUtil;
 import com.sunnybear.framework.tools.Toasty;
 import com.sunnybear.framework.tools.log.Logger;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 /**
  * 基础FragmentActivity,主管模组分发
  * Created by chenkai.gu on 2018/1/14.
  */
-public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseViewModule> extends RxAppCompatActivity
+public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseViewModule> extends AppCompatActivity
         implements Presenter {
 
     protected Context mContext;
@@ -49,8 +49,6 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
         mContext = this;
         mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         mViewModule = bindingViewModule(mViewDataBinding);
-        //添加LifecycleObserver
-        getLifecycle().addObserver(mViewModule);
         /*设置Toolbar*/
         mToolbar = mViewDataBinding.getRoot().findViewById(R.id.toolbar);
         mToolTitle = mViewDataBinding.getRoot().findViewById(R.id.toolbar_title);

@@ -5,18 +5,18 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.sunnybear.framework.library.eventbus.EventBusMessage;
-import com.trello.rxlifecycle2.components.support.RxFragment;
 
 /**
  * 基础Fragment,主管模组分发
  * Created by chenkai.gu on 2018/1/14.
  */
-public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseViewModule> extends RxFragment implements Presenter {
+public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseViewModule> extends Fragment implements Presenter {
 
     private View mFragmentView = null;
 
@@ -44,7 +44,6 @@ public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseV
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         mViewModule = bindingViewModule(mViewDataBinding);
-        getLifecycle().addObserver(mViewModule);
         mFragmentView = mViewDataBinding.getRoot();
         ViewGroup parent = (ViewGroup) mFragmentView.getParent();
         if (parent != null)
