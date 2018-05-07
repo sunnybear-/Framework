@@ -5,6 +5,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,10 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeAddress;
+import com.amap.api.services.geocoder.RegeocodeResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +38,15 @@ import java.util.List;
 public class AMapFragment extends SupportMapFragment
         implements AMap.OnMyLocationChangeListener, AMap.OnMarkerClickListener, AMap.OnMapLoadedListener {
 
+    private static final String TAG = AMapFragment.class.getSimpleName();
+
     //定位间隔时间
     public static final String KEY_LOCATION_INTERVAL = "key_location_interval";
     private long mLocationInterval;
     //定位icon
     public static final String KEY_DRAWABLE_LOCATION = "key_drawable_location";
     private int mLocationIconRes = -1;
-    //初始缩放等级
+    //初始地图缩放等级
     public static final String KEY_ZOOM_LEVEL = "key_zoom_level";
     private int mZoomLevel;
     //标尺开关
@@ -235,8 +242,26 @@ public class AMapFragment extends SupportMapFragment
 
     @Override
     public void onMyLocationChange(Location location) {
-        if (mOnMapCallback != null)
-            mOnMapCallback.onMyLocation(location);
+        if (location != null) {
+            final double latitude = location.getLatitude();
+            final double longitude = location.getLongitude();
+            if (latitude != 0.0 && longitude != 0.0)
+                MapHelper.geoCode(getActivity(), latitude, longitude,
+                        new GeocodeSearch.OnGeocodeSearchListener() {
+                            @Override
+                            public void onRegeocodeSearched(RegeocodeResult result, int code) {
+                                if (code == 1000 && mOnMapCallback != null)
+                                    mOnMapCallback.onMyLocation(latitude, longitude, result.getRegeocodeAddress());
+                            }
+
+                            @Override
+                            public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+
+                            }
+                        });
+        } else {
+            Log.e(TAG, "定位失败");
+        }
     }
 
     /**
@@ -321,10 +346,8 @@ public class AMapFragment extends SupportMapFragment
 
         /**
          * 当前我的位置回调
-         *
-         * @param location
          */
-        void onMyLocation(Location location);
+        void onMyLocation(double latitude, double longitude, RegeocodeAddress address);
 
         /**
          * Marker标记点点击回调

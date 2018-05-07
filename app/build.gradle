@@ -38,6 +38,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+        debug {
+            signingConfig signingConfigs.release
+        }
     }
 }
 
@@ -47,5 +50,5 @@ dependencies {
 //    implementation project(':qrcode')
     implementation project(':map')
 
-    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
 }

@@ -1,7 +1,7 @@
-package com.sunnybear.framework;
+package com.sunnybear.framework.databinding;
 
-import com.sunnybear.framework.databinding.ActivityLocationBinding;
 import com.sunnybear.framework.library.base.BaseViewModule;
+import com.sunnybear.framework.module.LocationActivity;
 
 /**
  * <p>

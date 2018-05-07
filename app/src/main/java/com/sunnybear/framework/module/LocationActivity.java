@@ -1,9 +1,11 @@
-package com.sunnybear.framework;
+package com.sunnybear.framework.module;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.sunnybear.framework.R;
 import com.sunnybear.framework.databinding.ActivityLocationBinding;
+import com.sunnybear.framework.databinding.ActivityLocationViewModule;
 import com.sunnybear.framework.library.base.BaseActivity;
 
 /**

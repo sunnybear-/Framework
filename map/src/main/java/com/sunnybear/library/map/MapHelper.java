@@ -14,6 +14,8 @@ import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 
@@ -65,6 +67,22 @@ public final class MapHelper {
         Poi endPoi = new Poi(end, endLocation, "");
         AmapNaviPage.getInstance().showRouteActivity(context,
                 new AmapNaviParams(startPoi, null, endPoi, type), callback);
+    }
+
+    /**
+     * 逆地理编码
+     *
+     * @param context
+     * @param latitude
+     * @param longitude
+     * @param onGeocodeSearchListener
+     */
+    public static void geoCode(Context context, double latitude, double longitude, GeocodeSearch.OnGeocodeSearchListener onGeocodeSearchListener) {
+        GeocodeSearch geocodeSearch = new GeocodeSearch(context);
+        if (onGeocodeSearchListener != null)
+            geocodeSearch.setOnGeocodeSearchListener(onGeocodeSearchListener);
+        RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(latitude, longitude), 200, GeocodeSearch.AMAP);
+        geocodeSearch.getFromLocationAsyn(query);
     }
 
     /**

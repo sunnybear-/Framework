@@ -1,7 +1,8 @@
-package com.sunnybear.framework;
+package com.sunnybear.framework.databinding;
 
 import android.view.View;
 
+import com.sunnybear.framework.module.MainActivity;
 import com.sunnybear.framework.databinding.ActivityMainBinding;
 import com.sunnybear.framework.library.base.BaseViewModule;
 

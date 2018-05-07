@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="vm" type="com.sunnybear.framework.ActivityMainViewModule"/>
+        <variable name="vm" type="com.sunnybear.framework.databinding.ActivityMainViewModule"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:fitsSystemWindows="true"
-        tools:context="com.sunnybear.framework.MainActivity">
+        tools:context="com.sunnybear.framework.module.MainActivity">
 
         <TextView
             android:layout_width="wrap_content"

@@ -1,17 +1,22 @@
-package com.sunnybear.framework;
+package com.sunnybear.framework.module;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.amap.api.maps.model.Marker;
+import com.amap.api.services.geocoder.RegeocodeAddress;
+import com.amap.api.services.geocoder.RegeocodeRoad;
+import com.sunnybear.framework.R;
 import com.sunnybear.framework.databinding.ActivityMainBinding;
+import com.sunnybear.framework.databinding.ActivityMainViewModule;
 import com.sunnybear.framework.library.base.BaseActivity;
 import com.sunnybear.framework.tools.StartHelper;
 import com.sunnybear.framework.tools.log.Logger;
 import com.sunnybear.library.map.AMapFragment;
 import com.sunnybear.library.map.Constant;
+
+import java.util.List;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, ActivityMainViewModule> {
 
@@ -45,8 +50,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, ActivityMain
 
         mAMapFragment.setOnMapCallback(new AMapFragment.OnMapCallback() {
             @Override
-            public void onMyLocation(Location location) {
-                Logger.i(location.toString());
+            public void onMyLocation(double latitude, double longitude, RegeocodeAddress address) {
+                List<RegeocodeRoad> roads = address.getRoads();
+                for (RegeocodeRoad road : roads) {
+                    Logger.i(road.getName());
+                }
             }
 
             @Override

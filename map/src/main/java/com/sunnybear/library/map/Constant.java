@@ -11,10 +11,10 @@ public final class Constant {
     /**
      * 地图初始缩放度
      */
-    public static final int ZOOM = 16;
+    public static final int ZOOM = 15;
 
     /**
-     * 定位间隔时间
+     * 定位间隔时间(单位:毫秒)
      */
-    public static final int LOCATION_INTERVAL = 1000;
+    public static final int LOCATION_INTERVAL = 60 * 1000;
 }
