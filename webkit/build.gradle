@@ -25,7 +25,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
     //JsBridge
-    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+    api 'com.github.lzyzsd:jsbridge:1.0.4'
     //路由跳转
     implementation("com.alibaba:arouter-api:$rootProject.ext.arouterApiVersion") {
         exclude group: "com.android.support"

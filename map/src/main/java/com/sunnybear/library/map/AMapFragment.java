@@ -162,9 +162,12 @@ public class AMapFragment extends SupportMapFragment
      * 启动定位
      */
     public void startLocation() {
-        if (!isStartLocation())
+        if (!isStartLocation()) {
             //设置为true表示启动显示定位蓝点,false表示隐藏定位蓝点并不进行定位,默认是false。
             mAMap.setMyLocationEnabled(true);
+            mAMap.setMyLocationStyle(getMyLocationStyle());
+            mAMap.moveCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
+        }
     }
 
     /**
@@ -206,8 +209,6 @@ public class AMapFragment extends SupportMapFragment
      */
     private void initMyLocation() {
         startLocation();
-        mAMap.setMyLocationStyle(getMyLocationStyle());
-        mAMap.moveCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
         UiSettings settings = mAMap.getUiSettings();
         settings.setLogoPosition(AMapOptions.LOGO_MARGIN_LEFT);//logo位置
         settings.setScaleControlsEnabled(isScaleControls);//标尺开关

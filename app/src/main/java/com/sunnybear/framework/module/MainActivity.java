@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, ActivityMain
 
         mAMapFragment = (AMapFragment) ARouter.getInstance()
                 .build(Constant.ROUTER_MAP, Constant.GROUP)
+                .withInt(AMapFragment.KEY_DRAWABLE_LOCATION, R.mipmap.icon_location2)
                 .withBoolean(AMapFragment.KEY_LOCATION_BUTTON, true)
                 .withBoolean(AMapFragment.KEY_COMPASS, true)
                 .withBoolean(AMapFragment.KEY_SCALE_CONTROLS, true)

@@ -4,6 +4,27 @@
   <meta charset="UTF-8">
   <title>js调用java</title>
   <script>
+    function connectWebViewJavascriptBridge ( callback ) {
+      if ( window.WebViewJavascriptBridge ) {
+        callback( WebViewJavascriptBridge )
+      } else {
+        document.addEventListener(
+          'WebViewJavascriptBridgeReady'
+          , function() {
+            callback( WebViewJavascriptBridge )
+          },
+          false );
+      }
+    }
+
+    connectWebViewJavascriptBridge( function( bridge ) {
+      bridge.init();
+      bridge.registerHandler( "functionInJs", function( data, responseCallback ) {
+        document.getElementById( "show" ).innerHTML = ("data from Android: = " + data);
+        responseCallback( "HTML返回的数据" )
+      } );
+    } );
+
     function onOpen () {
       var str1 = document.getElementById( "text1" ).value;
       var str2 = document.getElementById( "text2" ).value;
@@ -18,19 +39,15 @@
       );
     }
 
-    function testDiv () {
-      document.getElementById( "show" ).innerHTML = document.getElementsByTagName( "html" )[ 0 ].innerHTML;
-    }
-
     function testClick () {
       var str1 = document.getElementById( "text1" ).value;
       var str2 = document.getElementById( "text2" ).value;
       //发送消息给java本地代码
       var data = { id:1, content:"这是一个图片 <img src=\"a.png\"/> test\r\nhahaha" };
       window.WebViewJavascriptBridge.send(
-        data
-        , function( responseData ) {
-          document.getElementById( "show" ).innerHTML = "repsonseData from java, data = " + responseData
+        data,
+        function( responseData ) {
+          document.getElementById( "show" ).innerHTML = "repsonseData from Android, data = " + responseData
         }
       );
     }
@@ -48,51 +65,6 @@
         }
       );
     }
-
-    function bridgeLog ( logContent ) {
-      document.getElementById( "show" ).innerHTML = logContent;
-    }
-
-    function connectWebViewJavascriptBridge ( callback ) {
-      if ( window.WebViewJavascriptBridge ) {
-        callback( WebViewJavascriptBridge )
-      } else {
-        document.addEventListener(
-          'WebViewJavascriptBridgeReady'
-          , function() {
-            callback( WebViewJavascriptBridge )
-          },
-          false
-        );
-      }
-    }
-
-    // 第一连接时初始化bridage
-    connectWebViewJavascriptBridge( function( bridge ) {
-      bridge.init( function( message, responseCallback ) {
-        console.log( 'JS got a message', message );
-        var data = {
-          'Javascript Responds':'测试中文!'
-        };
-        console.log( 'JS responding with', data );
-        responseCallback( data );
-      } );
-      // 注册一个"functionInJs",
-      bridge.registerHandler( "functionInJs", function( data, responseCallback ) {
-        document.getElementById( "show" ).innerHTML = ("data from Java: = " + data);
-        var responseData                            = "Javascript Says  我要你的地址!";
-        // response层
-        responseCallback( responseData );
-      } );
-    } );
-    bridge.init( function( message, responseCallback ) {
-      console.log( 'JS got a message', message );
-      var data = {
-        'Javascript Responds':'Wee!'
-      };
-      console.log( 'JS responding with', data );
-      responseCallback( data );
-    } );
   </script>
 </head>
 <body>
@@ -113,10 +85,13 @@
   <input type="button" id="enter" value="发消息给Native" onclick="testClick();" />
 </p>
 <p>
-  <input type="button" id="enter1" value="调用Native方法" />
+  <input type="button" id="enter1" value="调用Native方法" onclick="testClick1();" />
 </p>
 <p>
   <input type="button" id="enter2" value="显示源代码" />
+</p>
+<p>
+  <input type="button" id="open" value="打开文件" onclick="onOpen();" />
 </p>
 
 </body>

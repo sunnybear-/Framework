@@ -11,11 +11,17 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
+import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -24,7 +30,7 @@ import com.github.lzyzsd.jsbridge.DefaultHandler;
 @Route(path = Constant.ROUTER_WEB, group = Constant.GROUP)
 public class WebKitFragment extends Fragment {
 
-    protected Context mContext;
+    private Context mContext;
     private View mFragmentView;
 
     private BridgeWebView mBridgeWebView;
@@ -33,6 +39,14 @@ public class WebKitFragment extends Fragment {
     private DefaultHandler mDefaultHandler;
     private WebChromeClient mWebChromeClient;
     private BridgeWebViewClient mBridgeWebViewClient;
+
+    private List<Handler> mHandlers;
+
+    public void addHandler(Handler handler) {
+        if (mHandlers == null)
+            mHandlers = new ArrayList<>();
+        mHandlers.add(handler);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -66,6 +80,13 @@ public class WebKitFragment extends Fragment {
         };
         mBridgeWebViewClient = new BridgeWebViewClient(mBridgeWebView);
         initWebView();
+
+        if (mHandlers.size() == 0)
+            throw new RuntimeException("没有注入Handler");
+        for (Handler handler : mHandlers) {
+            handler.registerHandler(mContext, mBridgeWebView);
+            handler.callHandler(mContext, mBridgeWebView);
+        }
     }
 
     /**
@@ -73,7 +94,12 @@ public class WebKitFragment extends Fragment {
      */
     private void initWebView() {
         if (mBridgeWebView != null) {
-            mBridgeWebView.setDefaultHandler(mDefaultHandler);
+            mBridgeWebView.setDefaultHandler(new BridgeHandler() {
+                @Override
+                public void handler(String data, CallBackFunction function) {
+                    Toast.makeText(getContext(), "DefaultHandler默认：" + data, Toast.LENGTH_LONG).show();
+                }
+            });
             mBridgeWebView.setWebChromeClient(mWebChromeClient);
             mBridgeWebView.setWebViewClient(mBridgeWebViewClient);
         }
