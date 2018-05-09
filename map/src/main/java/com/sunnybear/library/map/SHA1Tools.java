@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 /**
- * <p>
+ * 获取签名SHA1的方法工具
  * Created by chenkai.gu on 2018/5/6.
  */
 public final class SHA1Tools {

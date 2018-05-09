@@ -22,6 +22,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.AMapException;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeAddress;
@@ -76,6 +77,12 @@ public class AMapFragment extends SupportMapFragment
     //地图类型
     public static final String KEY_MAP_TYPE = "key_map_type";
     private int mMapType;
+    //是否初始化时开启定位
+    public static final String KEY_INIT_LOCATION = "key_init_location";
+    private boolean isInitLocation;
+    //MyLocationStyle
+    public static final String KEY_MY_LOCATION_STYLE = "key_my_location_style";
+    private int mMyLocationStyle;
 
     private View mFragmentView;
 
@@ -107,7 +114,9 @@ public class AMapFragment extends SupportMapFragment
             isTiltGestures = args.getBoolean(KEY_TILT_GESTURES, false);//倾斜手势
             isRotateGestures = args.getBoolean(KEY_ROTATE_GESTURES, false);//旋转手势
             isScrollGestures = args.getBoolean(KEY_SCROLL_GESTURES, true);//滑动手势
-            mMapType = args.getInt(KEY_MAP_TYPE, AMap.MAP_TYPE_NORMAL);
+            mMapType = args.getInt(KEY_MAP_TYPE, AMap.MAP_TYPE_NORMAL);//地图类型
+            isInitLocation = args.getBoolean(KEY_INIT_LOCATION, true);//是否初始化时开启定位
+            mMyLocationStyle = args.getInt(KEY_MY_LOCATION_STYLE, MyLocationStyle.LOCATION_TYPE_MAP_ROTATE);//MyLocationStyle
         }
         mMarkers = new ArrayList<>();
     }
@@ -128,7 +137,8 @@ public class AMapFragment extends SupportMapFragment
     @Override
     public void onResume() {
         super.onResume();
-        startLocation();
+        if (isInitLocation)
+            startLocation();
         mMapView.onResume();
     }
 
@@ -139,17 +149,17 @@ public class AMapFragment extends SupportMapFragment
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        stopLocation();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mMapView.onDestroy();
         if (mFragmentView != null)
             ((ViewGroup) mFragmentView.getParent()).removeView(mFragmentView);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopLocation();
     }
 
     @Override
@@ -179,6 +189,7 @@ public class AMapFragment extends SupportMapFragment
             mAMap.setMyLocationEnabled(false);
     }
 
+
     /**
      * 是否开启定位
      *
@@ -196,7 +207,7 @@ public class AMapFragment extends SupportMapFragment
     private void initMap() {
         if (mAMap == null) {
             mAMap = mMapView.getMap();
-            initMyLocation();
+            initUiSetting();
             mAMap.setMapType(mMapType);//设置地图种类
             mAMap.setOnMarkerClickListener(this);
             mAMap.setOnMyLocationChangeListener(this);
@@ -207,8 +218,8 @@ public class AMapFragment extends SupportMapFragment
     /**
      * 初始化我的定位
      */
-    private void initMyLocation() {
-        startLocation();
+    private void initUiSetting() {
+//        startLocation();
         UiSettings settings = mAMap.getUiSettings();
         settings.setLogoPosition(AMapOptions.LOGO_MARGIN_LEFT);//logo位置
         settings.setScaleControlsEnabled(isScaleControls);//标尺开关
@@ -233,7 +244,7 @@ public class AMapFragment extends SupportMapFragment
         //myLocationStyle.strokeWidth(5);//设置定位蓝点精度圈的边框宽度的方法
         myLocationStyle.radiusFillColor(Color.TRANSPARENT);//设置定位蓝点精度圆圈的填充颜色的方法
         //连续定位、且将视角移动到地图中心点,定位点依照设备方向旋转,并且会跟随设备移动.(1秒1次定位)如果不设置myLocationType,默认也会执行此种模式.
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
+        myLocationStyle.myLocationType(mMyLocationStyle);
         //设置是否显示定位小蓝点,用于满足只想使用定位,不想使用定位小蓝点的场景,设置false以后图面上不再有定位蓝点的概念,但是会持续回调位置信息.
         myLocationStyle.showMyLocation(true);
         if (mLocationIconRes != -1)
@@ -247,11 +258,11 @@ public class AMapFragment extends SupportMapFragment
             final double latitude = location.getLatitude();
             final double longitude = location.getLongitude();
             if (latitude != 0.0 && longitude != 0.0)
-                MapHelper.geoCode(getActivity(), latitude, longitude,
+                MapHelper.regeoCode(getActivity(), latitude, longitude,
                         new GeocodeSearch.OnGeocodeSearchListener() {
                             @Override
                             public void onRegeocodeSearched(RegeocodeResult result, int code) {
-                                if (code == 1000 && mOnMapCallback != null)
+                                if (code == AMapException.CODE_AMAP_SUCCESS && mOnMapCallback != null)
                                     mOnMapCallback.onMyLocation(latitude, longitude, result.getRegeocodeAddress());
                             }
 
@@ -295,6 +306,16 @@ public class AMapFragment extends SupportMapFragment
     }
 
     /**
+     * 添加marker标签
+     *
+     * @param latLng
+     * @return
+     */
+    public void addMarkerOptions(LatLng latLng, int markerIcon) {
+        addMarkerOptions(latLng, null, markerIcon);
+    }
+
+    /**
      * 清除marker标记点
      */
     public void clearMarker() {
@@ -305,6 +326,16 @@ public class AMapFragment extends SupportMapFragment
             mMarkers.clear();
             mMapView.invalidate();//刷新地图
         }
+    }
+
+    /**
+     * 设置InfoWindowAdapter
+     *
+     * @param adapter
+     */
+    public void setInfoWindowAdapter(AMap.InfoWindowAdapter adapter) {
+        if (mAMap != null)
+            mAMap.setInfoWindowAdapter(adapter);
     }
 
     @Override
@@ -322,6 +353,16 @@ public class AMapFragment extends SupportMapFragment
     public void moveMap(LatLng location) {
         if (mAMap != null)
             mAMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+    }
+
+    /**
+     * 移动地图至坐标点位置
+     *
+     * @param location 坐标经纬度
+     */
+    public void moveMap(LatLng location, int zoomLevel) {
+        if (mAMap != null)
+            mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel));
     }
 
     /**

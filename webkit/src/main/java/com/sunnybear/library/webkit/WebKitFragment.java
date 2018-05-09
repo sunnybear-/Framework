@@ -13,39 +13,30 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * <p>
  * Created by chenkai.gu on 2018/5/7.
  */
-@Route(path = Constant.ROUTER_WEB, group = Constant.GROUP)
 public class WebKitFragment extends Fragment {
 
-    private Context mContext;
+    protected Context mContext;
     private View mFragmentView;
 
-    private BridgeWebView mBridgeWebView;
+    protected BridgeWebView mBridgeWebView;
     private ProgressBar mProgressBar;
 
     private DefaultHandler mDefaultHandler;
     private WebChromeClient mWebChromeClient;
     private BridgeWebViewClient mBridgeWebViewClient;
 
-    private List<Handler> mHandlers;
-
-    public void addHandler(Handler handler) {
-        if (mHandlers == null)
-            mHandlers = new ArrayList<>();
-        mHandlers.add(handler);
+    public BridgeWebView getBridgeWebView() {
+        return mBridgeWebView;
     }
 
     @Override
@@ -80,13 +71,6 @@ public class WebKitFragment extends Fragment {
         };
         mBridgeWebViewClient = new BridgeWebViewClient(mBridgeWebView);
         initWebView();
-
-        if (mHandlers.size() == 0)
-            throw new RuntimeException("没有注入Handler");
-        for (Handler handler : mHandlers) {
-            handler.registerHandler(mContext, mBridgeWebView);
-            handler.callHandler(mContext, mBridgeWebView);
-        }
     }
 
     /**

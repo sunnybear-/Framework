@@ -1,5 +1,7 @@
 package com.sunnybear.framework.databinding;
 
+import android.view.View;
+
 import com.sunnybear.framework.library.base.BaseViewModule;
 import com.sunnybear.framework.module.WebActivity;
 
@@ -7,7 +9,8 @@ import com.sunnybear.framework.module.WebActivity;
  * <p>
  * Created by chenkai.gu on 2018/5/7.
  */
-public class ActivityWebViewModule extends BaseViewModule<WebActivity, ActivityWebBinding> {
+public class ActivityWebViewModule extends BaseViewModule<WebActivity, ActivityWebBinding>
+        implements View.OnClickListener {
 
     public ActivityWebViewModule(WebActivity webActivity, ActivityWebBinding viewDataBinding) {
         super(webActivity, viewDataBinding);
@@ -15,6 +18,11 @@ public class ActivityWebViewModule extends BaseViewModule<WebActivity, ActivityW
 
     @Override
     public void init() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }

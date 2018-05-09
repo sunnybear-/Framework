@@ -14,8 +14,11 @@ import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeQuery;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.help.Inputtips;
+import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 
@@ -72,17 +75,47 @@ public final class MapHelper {
     /**
      * 逆地理编码
      *
-     * @param context
-     * @param latitude
-     * @param longitude
-     * @param onGeocodeSearchListener
+     * @param latitude                纬度
+     * @param longitude               经度
+     * @param onGeocodeSearchListener 地理编码回调
      */
-    public static void geoCode(Context context, double latitude, double longitude, GeocodeSearch.OnGeocodeSearchListener onGeocodeSearchListener) {
+    public static void regeoCode(Context context, double latitude, double longitude, GeocodeSearch.OnGeocodeSearchListener onGeocodeSearchListener) {
         GeocodeSearch geocodeSearch = new GeocodeSearch(context);
         if (onGeocodeSearchListener != null)
             geocodeSearch.setOnGeocodeSearchListener(onGeocodeSearchListener);
         RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(latitude, longitude), 200, GeocodeSearch.AMAP);
         geocodeSearch.getFromLocationAsyn(query);
+    }
+
+    /**
+     * 地理编码
+     *
+     * @param address                 地址
+     * @param city                    城市
+     * @param onGeocodeSearchListener 地理编码回调
+     */
+    public static void geoCode(Context context, String address, String city, GeocodeSearch.OnGeocodeSearchListener onGeocodeSearchListener) {
+        GeocodeSearch geocodeSearch = new GeocodeSearch(context);
+        if (onGeocodeSearchListener != null)
+            geocodeSearch.setOnGeocodeSearchListener(onGeocodeSearchListener);
+        GeocodeQuery query = new GeocodeQuery(address, city);
+        geocodeSearch.getFromLocationNameAsyn(query);
+    }
+
+    /**
+     * 关键字搜索
+     *
+     * @param keyword           关键字
+     * @param city              城市
+     * @param isCityLimit       是否限制城市
+     * @param inputtipsListener 搜索回调
+     */
+    public static void startInputSearchAsyn(Context context, String keyword, String city, boolean isCityLimit, Inputtips.InputtipsListener inputtipsListener) {
+        InputtipsQuery query = new InputtipsQuery(keyword, city);
+        query.setCityLimit(isCityLimit);
+        Inputtips inputtips = new Inputtips(context, query);
+        inputtips.setInputtipsListener(inputtipsListener);
+        inputtips.requestInputtipsAsyn();
     }
 
     /**
