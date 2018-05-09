@@ -3,6 +3,7 @@ package com.sunnybear.framework.module;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sunnybear.framework.R;
 import com.sunnybear.framework.databinding.ActivityLocationBinding;
 import com.sunnybear.framework.databinding.ActivityLocationViewModule;
@@ -12,6 +13,7 @@ import com.sunnybear.framework.library.base.BaseActivity;
  * <p>
  * Created by chenkai.gu on 2018/5/6.
  */
+@Route(path = "/framework/location")
 public class LocationActivity extends BaseActivity<ActivityLocationBinding, ActivityLocationViewModule> {
     @Override
     protected int getLayoutId() {

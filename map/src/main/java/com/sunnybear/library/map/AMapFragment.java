@@ -35,7 +35,7 @@ import java.util.List;
  * 高德地图Fragment
  * Created by chenkai.gu on 2018/3/23.
  */
-@Route(path = Constant.ROUTER_MAP, group = Constant.GROUP)
+@Route(path = Constant.ROUTER_MAP)
 public class AMapFragment extends SupportMapFragment
         implements AMap.OnMyLocationChangeListener, AMap.OnMarkerClickListener, AMap.OnMapLoadedListener {
 
@@ -116,7 +116,7 @@ public class AMapFragment extends SupportMapFragment
             isScrollGestures = args.getBoolean(KEY_SCROLL_GESTURES, true);//滑动手势
             mMapType = args.getInt(KEY_MAP_TYPE, AMap.MAP_TYPE_NORMAL);//地图类型
             isInitLocation = args.getBoolean(KEY_INIT_LOCATION, true);//是否初始化时开启定位
-            mMyLocationStyle = args.getInt(KEY_MY_LOCATION_STYLE, MyLocationStyle.LOCATION_TYPE_MAP_ROTATE);//MyLocationStyle
+            mMyLocationStyle = args.getInt(KEY_MY_LOCATION_STYLE, MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//MyLocationStyle
         }
         mMarkers = new ArrayList<>();
     }

@@ -3,6 +3,7 @@ package com.sunnybear.framework.tools;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 
@@ -94,6 +95,18 @@ public final class StartHelper {
     public void startActivity(Class<? extends Activity> activityClass) {
         Intent intent = new Intent(mContext, activityClass);
         intent.putExtras(mBundle);
+        mContext.startActivity(intent);
+    }
+
+    /**
+     * 启动Activity
+     *
+     * @param activityClass
+     * @param url
+     */
+    public void startActivity(Class<? extends Activity> activityClass, String url) {
+        Intent intent = new Intent(mContext, activityClass);
+        intent.setData(Uri.parse(url));
         mContext.startActivity(intent);
     }
 

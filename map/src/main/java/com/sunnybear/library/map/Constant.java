@@ -6,9 +6,7 @@ package com.sunnybear.library.map;
  */
 public final class Constant {
 
-    public static final String GROUP = "map";
-
-    public static final String ROUTER_MAP = "/router/library/map";
+    public static final String ROUTER_MAP = "/library/map";
 
     /**
      * 地图初始缩放度

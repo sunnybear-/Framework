@@ -26,6 +26,23 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".UrlReceiveActivity">
+            <intent-filter>
+                <data
+                    android:host="sunnybear"
+                    android:scheme="arouter"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".module.MapActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".module.LocationActivity"
             android:screenOrientation="portrait"/>

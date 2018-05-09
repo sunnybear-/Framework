@@ -1,10 +1,12 @@
 package com.sunnybear.framework.databinding;
 
+import android.net.Uri;
 import android.view.View;
 
-import com.sunnybear.framework.module.MainActivity;
-import com.sunnybear.framework.databinding.ActivityMainBinding;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.sunnybear.framework.R;
 import com.sunnybear.framework.library.base.BaseViewModule;
+import com.sunnybear.framework.module.MainActivity;
 
 /**
  * <p>
@@ -24,7 +26,17 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
 
     @Override
     public void onClick(View v) {
-        //发起路由跳转
-//        ARouter.getInstance().build(Constant.ROUTER_QRCODE).navigation();
+        switch (v.getId()) {
+            case R.id.btn_map:
+//                StartHelper.with(mContext).startActivity(MapActivity.class);
+//                StartHelper.with(mContext).startActivity(UrlReceiveActivity.class,
+//                        "arouter://sunnybear/framework/map" +
+//                                "?name=alex&age=18&boy=true&high=180&obj=%7b%22name%22%3a%22jack%22%2c%22id%22%3a666%7d");
+                ARouter.getInstance()
+                        .build(Uri.parse("arouter://sunnybear/framework/map" +
+                                "?name=alex&age=18&boy=true&high=180&obj=%7b%22name%22%3a%22jack%22%2c%22id%22%3a666%7d"))
+                        .navigation();
+                break;
+        }
     }
 }

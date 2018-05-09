@@ -47,7 +47,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':library')
-//    implementation project(':qrcode')
+    implementation project(':qrcode')
     implementation project(':map')
     implementation project(':webkit')
+
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompilerVersion"
 }
