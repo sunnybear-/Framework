@@ -35,7 +35,7 @@ import java.util.List;
  * 高德地图Fragment
  * Created by chenkai.gu on 2018/3/23.
  */
-@Route(path = Constant.ROUTER_MAP)
+@Route(path = Constant.ROUTER_MAP, group = Constant.GROUP)
 public class AMapFragment extends SupportMapFragment
         implements AMap.OnMyLocationChangeListener, AMap.OnMarkerClickListener, AMap.OnMapLoadedListener {
 

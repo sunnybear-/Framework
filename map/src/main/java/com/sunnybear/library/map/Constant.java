@@ -6,6 +6,8 @@ package com.sunnybear.library.map;
  */
 public final class Constant {
 
+    public static final String GROUP = "map";
+
     public static final String ROUTER_MAP = "/library/map";
 
     /**

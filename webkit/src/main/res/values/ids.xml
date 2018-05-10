@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <item name="progress_web" type="id"/>
+    <item name="web_page" type="id"/>
     <item name="fragment_container_web" type="id"/>
 
 </resources>

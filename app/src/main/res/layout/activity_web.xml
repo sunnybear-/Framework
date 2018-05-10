@@ -19,7 +19,8 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="调用js的functionInJs方法"/>
+                android:text="调用js的functionInJs方法"
+                android:visibility="gone"/>
 
             <FrameLayout
                 android:id="@id/fragment_container_web"

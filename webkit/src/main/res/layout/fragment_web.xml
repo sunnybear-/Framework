@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <ProgressBar
-        android:id="@+id/progress"
+        android:id="@id/progress_web"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="5dp"
@@ -14,7 +14,7 @@
         android:progressDrawable="@drawable/progress_bar_states"/>
 
     <com.github.lzyzsd.jsbridge.BridgeWebView
-        android:id="@+id/web_page"
+        android:id="@id/web_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

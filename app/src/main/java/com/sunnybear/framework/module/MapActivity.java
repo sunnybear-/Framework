@@ -27,18 +27,9 @@ import java.util.List;
 @Route(path = "/framework/map")
 public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapViewModule> {
 
+    private AMapFragment mAMapFragment;
     @Autowired
     String name;
-    @Autowired
-    int age;
-    @Autowired
-    boolean boy;
-    @Autowired
-    int high;
-    @Autowired
-    String obj;
-
-    private AMapFragment mAMapFragment;
 
     @Override
     protected int getLayoutId() {
@@ -53,11 +44,11 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("地图");
         ARouter.getInstance().inject(this);
+        setTitle("地图");
         mViewModule.init();
         mAMapFragment = (AMapFragment) ARouter.getInstance()
-                .build(Constant.ROUTER_MAP)
+                .build(Constant.ROUTER_MAP, Constant.GROUP)
                 .withInt(AMapFragment.KEY_DRAWABLE_LOCATION, R.mipmap.icon_location2)
                 .withBoolean(AMapFragment.KEY_LOCATION_BUTTON, true)
                 .withBoolean(AMapFragment.KEY_COMPASS, true)
@@ -89,13 +80,6 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapVie
                 mAMapFragment.showTrafficEnabled(true);
             }
         });
-
-        Logger.i(
-                "name:" + name + "\n" +
-                        "age:" + age + "\n" +
-                        "boy:" + boy + "\n" +
-                        "high:" + high + "\n" +
-                        "obj:" + obj + "\n"
-        );
+        Logger.i(name);
     }
 }

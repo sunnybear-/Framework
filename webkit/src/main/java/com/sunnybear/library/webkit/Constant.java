@@ -8,5 +8,7 @@ public final class Constant {
 
     public static final String GROUP = "web";
 
-    public static final String ROUTER_WEB = "/router/library/web";
+    public static final String ROUTER_WEB = "/library/web";
+
+    public static final String ROUTER_SCHEME = "arouter:";
 }

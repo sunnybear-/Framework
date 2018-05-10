@@ -40,8 +40,8 @@ public class WebActivity extends BaseActivity<ActivityWebBinding, ActivityWebVie
         mWebKitFragment = (WebKitFragment) ARouter.getInstance()
                 .build(Constant.ROUTER_WEB, Constant.GROUP)
                 .navigation();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container_web, mWebKitFragment).commit();
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.fragment_container_web, mWebKitFragment).commit();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class WebActivity extends BaseActivity<ActivityWebBinding, ActivityWebVie
     @Override
     protected void onStart() {
         super.onStart();
-        mWebKitFragment.load("file:///android_asset/index.html");
+        mWebKitFragment.load("file:///android_asset/router.html");
 //        mWebKitFragment.load("http://www.youku.com");
     }
 
