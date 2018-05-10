@@ -11,6 +11,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
 import java.io.ByteArrayInputStream;
@@ -145,26 +147,23 @@ public final class AppUtils {
     }
 
     /**
-     * 安装apk(context.starActivity(intent)调用)
+     * 安装apk
      *
-     * @param file APK文件
+     * @param context
+     * @param file    APK文件uri
      */
-    public static Intent installApk(File file) {
-        return installApk(Uri.fromFile(file));
-    }
-
-    /**
-     * 安装apk(context.starActivity(intent)调用)
-     *
-     * @param file APK文件uri
-     */
-    public static Intent installApk(Uri file) {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
+    public static void installApk(Context context, File file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setDataAndType(file, "application/vnd.android.package-archive");
-        return intent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri contentUri = FileProvider.getUriForFile(context, "com.sunnybear.framework.fileProvider", file);
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+        } else {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        }
+        context.startActivity(intent);
     }
 
     /**

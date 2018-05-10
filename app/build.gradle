@@ -18,6 +18,9 @@ android {
         manifestPlaceholders = [
                 AMAP_API_KEY: "3a82113bb69cb64a8d832ada1eb2415e"
         ]
+        ndk {
+            abiFilters 'armeabi', 'arm64-v8a'
+        }
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
@@ -42,6 +45,14 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    // 自定义输出配置(打包命令:gradlew assembleRelease)
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+//            def releaseTime = new Date().format('yyyy-MM-dd')
+//            outputFileName = "${defaultConfig.applicationId}_${variant.flavorName}_${defaultConfig.versionName}_${releaseTime}.apk"
+            outputFileName = "framework_${defaultConfig.versionName}.apk"
+        }
+    }
 }
 
 dependencies {
@@ -50,6 +61,8 @@ dependencies {
     implementation project(':qrcode')
     implementation project(':map')
     implementation project(':webkit')
+
+    implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
 
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompilerVersion"
 }
