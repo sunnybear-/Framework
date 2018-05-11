@@ -152,12 +152,12 @@ public final class AppUtils {
      * @param context
      * @param file    APK文件uri
      */
-    public static void installApk(Context context, File file) {
+    public static void installApk(Context context, String packageName, File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(context, "com.sunnybear.framework.fileProvider", file);
+            Uri contentUri = FileProvider.getUriForFile(context, packageName + ".fileProvider", file);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
         } else {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
