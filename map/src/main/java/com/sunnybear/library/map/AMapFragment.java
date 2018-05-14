@@ -292,7 +292,18 @@ public class AMapFragment extends SupportMapFragment
             markerOptions.icon(BitmapDescriptorFactory.fromResource(markerIcon));
         //设置marker平贴地图效果
         markerOptions.setFlat(true);
-        mMarkers.add(mAMap.addMarker(markerOptions));
+
+        Marker marker = mAMap.addMarker(markerOptions);
+
+//        Animation animation = new RotateAnimation(marker.getRotateAngle(), marker.getRotateAngle() + 180, 0, 0, 0);
+//        long duration = 1000L;
+//        animation.setDuration(duration);
+//        animation.setInterpolator(new LinearInterpolator());
+//
+//        marker.setAnimation(animation);
+//        marker.startAnimation();
+
+        mMarkers.add(marker);
     }
 
     /**
