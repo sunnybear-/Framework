@@ -110,7 +110,8 @@ public final class MapHelper {
      * @param isCityLimit       是否限制城市
      * @param inputtipsListener 搜索回调
      */
-    public static void startInputSearchAsyn(Context context, String keyword, String city, boolean isCityLimit, Inputtips.InputtipsListener inputtipsListener) {
+    public static void startInputSearchAsyn(Context context, String keyword, String city, boolean isCityLimit,
+                                            Inputtips.InputtipsListener inputtipsListener) {
         InputtipsQuery query = new InputtipsQuery(keyword, city);
         query.setCityLimit(isCityLimit);
         Inputtips inputtips = new Inputtips(context, query);

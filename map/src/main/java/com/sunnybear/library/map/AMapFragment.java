@@ -172,12 +172,12 @@ public class AMapFragment extends SupportMapFragment
      * 启动定位
      */
     public void startLocation() {
-        if (!isStartLocation()) {
-            //设置为true表示启动显示定位蓝点,false表示隐藏定位蓝点并不进行定位,默认是false。
-            mAMap.setMyLocationEnabled(true);
-            mAMap.setMyLocationStyle(getMyLocationStyle());
-            mAMap.moveCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
-        }
+//        if (!isStartLocation()) {
+        //设置为true表示启动显示定位蓝点,false表示隐藏定位蓝点并不进行定位,默认是false。
+        mAMap.setMyLocationEnabled(true);
+        mAMap.setMyLocationStyle(getMyLocationStyle());
+        mAMap.moveCamera(CameraUpdateFactory.zoomTo(mZoomLevel));
+//        }
     }
 
     /**

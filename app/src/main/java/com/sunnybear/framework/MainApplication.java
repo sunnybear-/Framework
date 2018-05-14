@@ -1,9 +1,11 @@
 package com.sunnybear.framework;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lzy.okgo.OkGo;
+import com.sunnybear.framework.dao.AppDatabase;
 import com.sunnybear.framework.tools.log.Logger;
 
 /**
@@ -24,5 +26,8 @@ public class MainApplication extends Application {
         OkGo.getInstance().init(this);
 
         Logger.init(true, "framework");
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,
+                "framework.db").build();
     }
 }
