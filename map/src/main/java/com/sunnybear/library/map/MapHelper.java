@@ -1,6 +1,7 @@
 package com.sunnybear.library.map;
 
 import android.content.Context;
+import android.view.View;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -207,6 +208,26 @@ public final class MapHelper {
 
         @Override
         public void onExitPage(int i) {
+
+        }
+
+        @Override
+        public void onStrategyChanged(int i) {
+
+        }
+
+        @Override
+        public View getCustomNaviBottomView() {
+            return null;
+        }
+
+        @Override
+        public View getCustomNaviView() {
+            return null;
+        }
+
+        @Override
+        public void onArrivedWayPoint(int i) {
 
         }
     }

@@ -1,4 +1,4 @@
-package com.sunnybear.library.webkit;
+package com.sunnybear.framework.library;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

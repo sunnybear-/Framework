@@ -3,7 +3,6 @@ package com.sunnybear.framework.module;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.amap.api.maps.model.Marker;
@@ -28,8 +27,6 @@ import java.util.List;
 public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapViewModule> {
 
     private AMapFragment mAMapFragment;
-    @Autowired
-    String name;
 
     @Override
     protected int getLayoutId() {
@@ -44,7 +41,6 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ARouter.getInstance().inject(this);
         setTitle("地图");
         mViewModule.init();
         mAMapFragment = (AMapFragment) ARouter.getInstance()
@@ -80,6 +76,5 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapVie
                 mAMapFragment.showTrafficEnabled(true);
             }
         });
-        Logger.i(name);
     }
 }

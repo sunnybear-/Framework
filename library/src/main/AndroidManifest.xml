@@ -20,6 +20,21 @@
             android:name=".tools.permission.PermissionActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".library.RouterTransferStrategy">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="sunnybear"
+                    android:scheme="arouter"/>
+            </intent-filter>
+        </activity>
+
+
     </application>
 
 </manifest>

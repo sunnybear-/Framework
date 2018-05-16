@@ -62,8 +62,6 @@ dependencies {
     implementation project(':map')
     implementation project(':webkit')
 
-    implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
-
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompilerVersion"
 
     implementation "android.arch.persistence.room:runtime:1.1.0"
