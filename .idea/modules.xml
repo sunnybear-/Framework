@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/qrcode/qrcode.iml" filepath="$PROJECT_DIR$/qrcode/qrcode.iml" />
       <module fileurl="file://$PROJECT_DIR$/third_login_pay/third_login_pay.iml" filepath="$PROJECT_DIR$/third_login_pay/third_login_pay.iml" />
       <module fileurl="file://$PROJECT_DIR$/video/video.iml" filepath="$PROJECT_DIR$/video/video.iml" />
+      <module fileurl="file://$PROJECT_DIR$/voice/voice.iml" filepath="$PROJECT_DIR$/voice/voice.iml" />
       <module fileurl="file://$PROJECT_DIR$/webkit/webkit.iml" filepath="$PROJECT_DIR$/webkit/webkit.iml" />
     </modules>
   </component>
