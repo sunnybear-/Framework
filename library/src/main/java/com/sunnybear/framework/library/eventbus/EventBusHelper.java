@@ -31,6 +31,15 @@ public final class EventBusHelper {
     }
 
     /**
+     * 移除EventBus粘滞事件
+     *
+     * @param message
+     */
+    public static void removeStickyEvent(EventBusMessage message) {
+        mEventBus.removeStickyEvent(message);
+    }
+
+    /**
      * 发送EventBus事件
      *
      * @param message EventBus消息
