@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import com.sunnybear.framework.tools.log.Logger;
-
 /**
  * <p>
  * Created by chenkai.gu on 2018/3/9.
@@ -47,31 +45,31 @@ public abstract class BaseViewModule<T extends Presenter, VDB extends ViewDataBi
 
     @Override
     public void onCreate(LifecycleOwner owner) {
-        Logger.w(getClass().getSimpleName() + "=====onCreate");
+
     }
 
     @Override
     public void onStart(LifecycleOwner owner) {
-        Logger.w(getClass().getSimpleName() + "=====onStart");
+
     }
 
     @Override
     public void onResume(LifecycleOwner owner) {
-        Logger.w(getClass().getSimpleName() + "=====onResume");
+
     }
 
     @Override
     public void onPause(LifecycleOwner owner) {
-        Logger.w(getClass().getSimpleName() + "=====onPause");
+
     }
 
     @Override
     public void onStop(LifecycleOwner owner) {
-        Logger.w(getClass().getSimpleName() + "=====onStop");
+
     }
 
     @Override
     public void onDestroy(LifecycleOwner owner) {
-        Logger.w(getClass().getSimpleName() + "=====onDestroy");
+
     }
 }

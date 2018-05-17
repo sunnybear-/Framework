@@ -21,11 +21,18 @@
             android:text="启动地图"/>
 
         <Button
-            android:id="@+id/btn_check_version"
+            android:id="@+id/btn_service"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{vm::onClick}"
-            android:text="检查更新"/>
+            android:text="ARouter暴露服务"/>
+
+        <Button
+            android:id="@+id/btn_query"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onClick}"
+            android:text="查询数据库"/>
 
     </LinearLayout>
 

@@ -1,1 +1,1 @@
-include ':app', ':library', ':map', ':third_login_pay', ':qrcode', ':video', ':webkit', ':voice'
+include ':app', ':library', ':map', ':third_login_pay', ':qrcode', ':video', ':webkit', ':voice', ':database'

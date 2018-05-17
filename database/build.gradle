@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api "android.arch.persistence.room:runtime:$rootProject.ext.roomVersion"
+    api("android.arch.persistence.room:rxjava2:$rootProject.ext.roomVersion") {
+        exclude group: "io.reactivex.rxjava2"
+    }
+//    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.roomVersion"
+}

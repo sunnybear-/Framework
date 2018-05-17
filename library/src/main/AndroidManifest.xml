@@ -21,7 +21,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".library.RouterTransferStrategy">
+            android:name=".library.router.RouterTransferStrategy">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW"/>
 
