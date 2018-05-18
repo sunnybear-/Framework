@@ -34,6 +34,28 @@
             android:onClick="@{vm::onClick}"
             android:text="查询数据库"/>
 
+        <Button
+            android:id="@+id/btn_anim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onClick}"
+            android:text="开始伸缩动画"/>
+
+        <Button
+            android:id="@+id/btn_clear_anim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onClick}"
+            android:text="停止伸缩动画"/>
+
+        <View
+            android:id="@+id/target"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:background="@color/black"/>
+
     </LinearLayout>
 
 </layout>

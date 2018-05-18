@@ -1,7 +1,10 @@
 package com.sunnybear.framework.databinding;
 
+import android.animation.ObjectAnimator;
 import android.net.Uri;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -11,6 +14,7 @@ import com.sunnybear.framework.entity.User;
 import com.sunnybear.framework.library.base.BaseViewModule;
 import com.sunnybear.framework.module.MainActivity;
 import com.sunnybear.framework.provider.ARouterTestService;
+import com.sunnybear.framework.tools.Toasty;
 import com.sunnybear.framework.tools.log.Logger;
 import com.sunnybear.library.database.DatabaseHelper;
 
@@ -35,6 +39,8 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
     @Autowired(name = "/service/test")
     ARouterTestService mService;
 
+    private ObjectAnimator mAnimator;
+
     public ActivityMainViewModule(MainActivity mainActivity, ActivityMainBinding viewDataBinding) {
         super(mainActivity, viewDataBinding);
     }
@@ -48,6 +54,11 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
 
         User user = new User("gu", "sunnybear");
 //        mUserDao.insert(user);
+
+        mAnimator = ObjectAnimator
+                .ofFloat(mViewDataBinding.target, "scaleY", 1, 1.5f, 1);
+        mAnimator.setDuration(1000);
+        mAnimator.setRepeatCount(ObjectAnimator.INFINITE);
     }
 
     @Override
@@ -78,6 +89,15 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
                                 Logger.i(user.toString());
                             }
                         }).subscribe();
+                break;
+            case R.id.btn_anim:
+//                mAnimator.start();
+                Toast toast = Toasty.normal(mContext, "居中显示");
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                break;
+            case R.id.btn_clear_anim:
+//                mAnimator.end();
                 break;
         }
     }
