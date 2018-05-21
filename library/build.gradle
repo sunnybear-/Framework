@@ -28,7 +28,7 @@ dependencies {
     api "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
     implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'
-    implementation "com.android.support:gridlayout-v7:$rootProject.ext.supportLibraryVersion"
+//    implementation "com.android.support:gridlayout-v7:$rootProject.ext.supportLibraryVersion"
 //    implementation "com.android.support:palette-v7:$rootProject.ext.supportLibraryVersion"
     //响应式布局
     api "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintLayoutVersion"
@@ -83,7 +83,6 @@ dependencies {
         transitive = true
         exclude group: "com.android.support"
     }
-//    implementation project(':tools')
     //下拉刷新
     api 'in.srain.cube:ultra-ptr:1.0.11'
     //底部导航栏
@@ -91,7 +90,9 @@ dependencies {
     //loading布局视图
 //    api 'com.github.czy1121:loadinglayout:1.0.1'
     //沉浸式状态栏
-    api 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    api 'com.jaeger.statusbarutil:library:1.5.1'
     //viewpager圆点指示器
     api 'me.relex:circleindicator:1.2.2@aar'
+    //pickerView
+    api 'com.contrarywind:Android-PickerView:4.1.3'
 }

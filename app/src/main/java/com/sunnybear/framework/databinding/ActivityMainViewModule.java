@@ -1,25 +1,31 @@
 package com.sunnybear.framework.databinding;
 
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.FrameLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.sunnybear.framework.R;
 import com.sunnybear.framework.dao.UserDao;
 import com.sunnybear.framework.entity.User;
 import com.sunnybear.framework.library.base.BaseViewModule;
 import com.sunnybear.framework.module.MainActivity;
 import com.sunnybear.framework.provider.ARouterTestService;
-import com.sunnybear.framework.tools.Toasty;
 import com.sunnybear.framework.tools.log.Logger;
 import com.sunnybear.library.database.DatabaseHelper;
 
 import org.reactivestreams.Publisher;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -41,6 +47,8 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
 
     private ObjectAnimator mAnimator;
 
+    private TimePickerView mTimePickerView;
+
     public ActivityMainViewModule(MainActivity mainActivity, ActivityMainBinding viewDataBinding) {
         super(mainActivity, viewDataBinding);
     }
@@ -55,10 +63,40 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
         User user = new User("gu", "sunnybear");
 //        mUserDao.insert(user);
 
-        mAnimator = ObjectAnimator
-                .ofFloat(mViewDataBinding.target, "scaleY", 1, 1.5f, 1);
-        mAnimator.setDuration(1000);
-        mAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+//        mAnimator = ObjectAnimator
+//                .ofFloat(mViewDataBinding.target, "scaleY", 1, 1.5f, 1);
+//        mAnimator.setDuration(1000);
+//        mAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+
+        mTimePickerView = initTimePicker();
+    }
+
+    private TimePickerView initTimePicker() {
+        TimePickerView timePickerView = new TimePickerBuilder(mContext,
+                new OnTimeSelectListener() {
+                    @Override
+                    public void onTimeSelect(Date date, View v) {
+
+                    }
+                }).setType(new boolean[]{true, true, true, false, false, false})
+                .isDialog(true)
+                .build();
+        Dialog mDialog = timePickerView.getDialog();
+        if (mDialog != null) {
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    Gravity.BOTTOM);
+            params.leftMargin = 0;
+            params.rightMargin = 0;
+            timePickerView.getDialogContainerLayout().setLayoutParams(params);
+            Window dialogWindow = mDialog.getWindow();
+            if (dialogWindow != null) {
+//                dialogWindow.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim);//修改动画样式
+                dialogWindow.setGravity(Gravity.BOTTOM);//改成Bottom,底部显示
+            }
+        }
+        return timePickerView;
     }
 
     @Override
@@ -90,14 +128,17 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
                             }
                         }).subscribe();
                 break;
-            case R.id.btn_anim:
-//                mAnimator.start();
-                Toast toast = Toasty.normal(mContext, "居中显示");
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                break;
-            case R.id.btn_clear_anim:
-//                mAnimator.end();
+//            case R.id.btn_anim:
+////                mAnimator.start();
+//                Toast toast = Toasty.normal(mContext, "居中显示");
+//                toast.setGravity(Gravity.CENTER, 0, 0);
+//                toast.show();
+//                break;
+//            case R.id.btn_clear_anim:
+////                mAnimator.end();
+//                break;
+            case R.id.btn_date:
+                mTimePickerView.show(v);
                 break;
         }
     }

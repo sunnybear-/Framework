@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -16,13 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.jaeger.library.StatusBarUtil;
 import com.sunnybear.framework.R;
 import com.sunnybear.framework.library.eventbus.EventBusMessage;
 import com.sunnybear.framework.tools.ActivityStackManager;
 import com.sunnybear.framework.tools.AppUtils;
 import com.sunnybear.framework.tools.KeyboardUtils;
-import com.sunnybear.framework.tools.PhoneUtil;
+import com.sunnybear.framework.tools.ResourcesUtils;
 import com.sunnybear.framework.tools.Toasty;
 
 /**
@@ -39,8 +38,6 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
 
     private Toolbar mToolbar;
     private TextView mToolTitle;
-
-    private SystemBarTintManager mSystemBarTintManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,12 +62,7 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
         setDisplayHomeAsUpEnabled(true);
 
         /*沉浸式状态栏*/
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            PhoneUtil.setTranslucentStatus(this, true);
-            mSystemBarTintManager = new SystemBarTintManager(this);
-            mSystemBarTintManager.setStatusBarTintEnabled(true);
-            mSystemBarTintManager.setStatusBarAlpha(0.0f);
-        }
+        setStatusBar();
 
         Bundle args = getIntent().getExtras();//接收前一个Activity传递的参数
         onBundle(args);
@@ -80,16 +72,10 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
     }
 
     /**
-     * 改变状态栏颜色
-     *
-     * @param color
+     * 设置状态栏样式
      */
-    public void setStatusBarTintColor(int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            mSystemBarTintManager = new SystemBarTintManager(this);
-            mSystemBarTintManager.setStatusBarTintEnabled(true);
-            mSystemBarTintManager.setStatusBarTintColor(color);
-        }
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, ResourcesUtils.getColor(mContext, R.color.colorPrimary), 0);
     }
 
     @Override

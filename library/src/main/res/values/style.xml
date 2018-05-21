@@ -12,6 +12,9 @@
         <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
         <!--Overflow按钮的Style-->
         <item name="actionOverflowButtonStyle">@style/OverflowButton</item>
+        <!--沉浸式状态栏-->
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:clipToPadding">false</item>
     </style>
 
     <!--Activity进入退出动画-->

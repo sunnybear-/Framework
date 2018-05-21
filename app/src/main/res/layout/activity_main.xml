@@ -35,6 +35,13 @@
             android:text="查询数据库"/>
 
         <Button
+            android:id="@+id/btn_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{vm::onClick}"
+            android:text="日期选择器"/>
+
+        <!--<Button
             android:id="@+id/btn_anim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +61,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:background="@color/black"/>
+            android:background="@color/black"/>-->
 
     </LinearLayout>
 
