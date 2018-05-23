@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trello.rxlifecycle2.components.support.RxAppCompatDialogFragment;
+
 /**
  * 基础DialogFragment
  * Created by chenkai.gu on 2018/3/27.
  */
-public abstract class BaseDialogFragment<VDB extends ViewDataBinding> extends DialogFragment {
+public abstract class BaseDialogFragment<VDB extends ViewDataBinding> extends RxAppCompatDialogFragment {
 
     private View mFragmentView = null;
 

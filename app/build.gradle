@@ -67,6 +67,5 @@ dependencies {
     implementation project(':database')
 
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompilerVersion"
-
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.roomVersion"
 }

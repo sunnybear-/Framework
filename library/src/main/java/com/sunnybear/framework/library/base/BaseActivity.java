@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,12 +22,13 @@ import com.sunnybear.framework.tools.AppUtils;
 import com.sunnybear.framework.tools.KeyboardUtils;
 import com.sunnybear.framework.tools.ResourcesUtils;
 import com.sunnybear.framework.tools.Toasty;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 /**
  * 基础FragmentActivity,主管模组分发
  * Created by chenkai.gu on 2018/1/14.
  */
-public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseViewModule> extends AppCompatActivity
+public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseViewModule> extends RxAppCompatActivity
         implements Presenter {
 
     protected Context mContext;

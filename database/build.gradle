@@ -19,9 +19,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api "android.arch.persistence.room:runtime:$rootProject.ext.roomVersion"
+    api("android.arch.persistence.room:runtime:$rootProject.ext.roomVersion") {
+        exclude group: "com.android.support"
+    }
     api("android.arch.persistence.room:rxjava2:$rootProject.ext.roomVersion") {
         exclude group: "io.reactivex.rxjava2"
+        exclude group: "com.android.support"
     }
 //    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.roomVersion"
 }
