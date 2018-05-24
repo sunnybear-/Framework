@@ -26,7 +26,6 @@
                 app:indicator_height="5dp"
                 app:indicator_margin="5dp"
                 app:indicator_width="5dp"
-                app:is_auto_play="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

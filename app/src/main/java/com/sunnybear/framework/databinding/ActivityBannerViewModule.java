@@ -1,5 +1,7 @@
 package com.sunnybear.framework.databinding;
 
+import android.arch.lifecycle.LifecycleOwner;
+
 import com.sunnybear.framework.library.base.BaseViewModule;
 import com.sunnybear.framework.module.BannerActivity;
 import com.sunnybear.framework.ui.viewpager.banner.BannerConfig;
@@ -34,5 +36,15 @@ public class ActivityBannerViewModule extends BaseViewModule<BannerActivity, Act
         mViewDataBinding.banner.setImages(images)
                 .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
                 .setBannerAnimation(Transformer.DepthPage).start();
+    }
+
+    @Override
+    public void onStart(LifecycleOwner owner) {
+        mViewDataBinding.banner.startAutoPlay();
+    }
+
+    @Override
+    public void onStop(LifecycleOwner owner) {
+        mViewDataBinding.banner.stopAutoPlay();
     }
 }
