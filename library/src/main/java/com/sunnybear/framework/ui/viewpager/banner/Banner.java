@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sunnybear.framework.R;
-import com.sunnybear.framework.ui.viewpager.banner.listener.OnBannerClickListener;
 import com.sunnybear.framework.ui.viewpager.banner.listener.OnBannerListener;
 import com.sunnybear.framework.ui.viewpager.banner.loader.GlideBannerImageLoader;
 import com.sunnybear.framework.ui.viewpager.banner.loader.ImageLoaderInterface;
@@ -71,7 +70,6 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
     private BannerPagerAdapter adapter;
     private OnPageChangeListener mOnPageChangeListener;
     private BannerScroller mScroller;
-    private OnBannerClickListener bannerListener;
     private OnBannerListener listener;
     private DisplayMetrics dm;
 
@@ -511,16 +509,6 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
         public Object instantiateItem(ViewGroup container, final int position) {
             container.addView(imageViews.get(position));
             View view = imageViews.get(position);
-            if (bannerListener != null) {
-                view.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.e(tag, "你正在使用旧版点击事件接口，下标是从1开始，" +
-                                "为了体验请更换为setOnBannerListener，下标从0开始计算");
-                        bannerListener.OnBannerClick(position);
-                    }
-                });
-            }
             if (listener != null) {
                 view.setOnClickListener(new OnClickListener() {
                     @Override
@@ -540,9 +528,8 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (mOnPageChangeListener != null) {
+        if (mOnPageChangeListener != null)
             mOnPageChangeListener.onPageScrollStateChanged(state);
-        }
 //        Log.i(tag,"currentItem: "+currentItem);
         switch (state) {
             case 0://No operation
@@ -600,13 +587,6 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
                 bannerTitle.setText(titles.get(position - 1));
                 break;
         }
-
-    }
-
-    @Deprecated
-    public Banner setOnBannerClickListener(OnBannerClickListener listener) {
-        this.bannerListener = listener;
-        return this;
     }
 
     /**
