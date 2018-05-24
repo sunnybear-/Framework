@@ -15,13 +15,17 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clipChildren="false">
 
             <com.sunnybear.framework.ui.viewpager.banner.Banner
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:layout_marginTop="8dp"
+                android:clipChildren="false"
                 app:delay_time="1500"
                 app:indicator_height="5dp"
                 app:indicator_margin="5dp"

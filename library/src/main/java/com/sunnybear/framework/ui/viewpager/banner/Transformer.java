@@ -11,6 +11,7 @@ import com.sunnybear.framework.ui.viewpager.banner.transformer.DepthPageTransfor
 import com.sunnybear.framework.ui.viewpager.banner.transformer.FlipHorizontalTransformer;
 import com.sunnybear.framework.ui.viewpager.banner.transformer.FlipVerticalTransformer;
 import com.sunnybear.framework.ui.viewpager.banner.transformer.ForegroundToBackgroundTransformer;
+import com.sunnybear.framework.ui.viewpager.banner.transformer.MeiZuTransformer;
 import com.sunnybear.framework.ui.viewpager.banner.transformer.RotateDownTransformer;
 import com.sunnybear.framework.ui.viewpager.banner.transformer.RotateUpTransformer;
 import com.sunnybear.framework.ui.viewpager.banner.transformer.ScaleInOutTransformer;
@@ -38,4 +39,5 @@ public class Transformer {
     public static Class<? extends PageTransformer> ZoomIn = ZoomInTransformer.class;
     public static Class<? extends PageTransformer> ZoomOut = ZoomOutTranformer.class;
     public static Class<? extends PageTransformer> ZoomOutSlide = ZoomOutSlideTransformer.class;
+    public static Class<? extends PageTransformer> MeiZu = MeiZuTransformer.class;
 }

@@ -1,6 +1,9 @@
 package com.sunnybear.framework.databinding;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.sunnybear.framework.library.base.BaseViewModule;
 import com.sunnybear.framework.module.BannerActivity;
@@ -33,9 +36,17 @@ public class ActivityBannerViewModule extends BaseViewModule<BannerActivity, Act
         image = new Image("4", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527155196076&di=60d2ed1a34f0ee19f4bd6c87ac10fcd9&imgtype=0&src=http%3A%2F%2Fpic35.photophoto.cn%2F20150617%2F0033033950635031_b.jpg");
         images.add(image);
 
+        mViewDataBinding.banner.setOffscreenPageLimit(images.size());
         mViewDataBinding.banner.setImages(images)
                 .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
-                .setBannerAnimation(Transformer.DepthPage).start();
+                .setBannerAnimation(Transformer.MeiZu).start();
+
+        ((ViewGroup) mViewDataBinding.banner.getParent()).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return mViewDataBinding.banner.dispatchTouchEvent(event);
+            }
+        });
     }
 
     @Override

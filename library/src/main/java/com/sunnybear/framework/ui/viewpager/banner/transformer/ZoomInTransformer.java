@@ -28,5 +28,4 @@ public class ZoomInTransformer extends ABaseTransformer {
 		view.setPivotY(view.getHeight() * 0.5f);
 		view.setAlpha(position < -1f || position > 1f ? 0f : 1f - (scale - 1f));
 	}
-
 }
