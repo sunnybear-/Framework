@@ -2,7 +2,6 @@ package com.sunnybear.framework.databinding;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
-import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,10 @@ import com.sunnybear.framework.R;
 import com.sunnybear.framework.dao.UserDao;
 import com.sunnybear.framework.entity.User;
 import com.sunnybear.framework.library.base.BaseViewModule;
+import com.sunnybear.framework.module.BannerActivity;
 import com.sunnybear.framework.module.MainActivity;
 import com.sunnybear.framework.provider.ARouterTestService;
+import com.sunnybear.framework.tools.StartHelper;
 import com.sunnybear.framework.tools.log.Logger;
 import com.sunnybear.library.database.DatabaseHelper;
 
@@ -103,10 +104,11 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_map:
-                ARouter.getInstance()
-                        .build(Uri.parse("arouter://sunnybear/framework/map"))
-//                        .greenChannel()
-                        .navigation();
+//                ARouter.getInstance()
+//                        .build(Uri.parse("arouter://sunnybear/framework/map"))
+////                        .greenChannel()
+//                        .navigation();
+                StartHelper.with(mContext).startActivity(BannerActivity.class);
                 break;
             case R.id.btn_service:
                 mService.printToast("ARouter暴露服务");

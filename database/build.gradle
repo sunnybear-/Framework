@@ -18,6 +18,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:support-annotations:$rootProject.ext.supportLibraryVersion"
 
     api("android.arch.persistence.room:runtime:$rootProject.ext.roomVersion") {
         exclude group: "com.android.support"

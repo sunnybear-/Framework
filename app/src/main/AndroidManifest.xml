@@ -43,6 +43,10 @@
             android:name=".module.MapActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".module.BannerActivity"
+            android:screenOrientation="portrait"/>
+
         <!--<activity
                android:name=".module.WebActivity"
                android:screenOrientation="portrait"
