@@ -3,7 +3,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="badgeTabItems"
+            type="java.util.ArrayList&lt;com.sunnybear.framework.ui.BadgeTabItem&gt;"/>
     </data>
 
     <LinearLayout
@@ -12,6 +14,16 @@
         android:orientation="vertical">
 
         <include layout="@layout/title_bar"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:badgeItem="@{2}"
+            android:badgeTabItems="@{badgeTabItems}"
+            app:tabBackground="@drawable/tab_background"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"/>
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

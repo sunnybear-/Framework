@@ -5,8 +5,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sunnybear.framework.R;
 import com.sunnybear.framework.library.base.BaseViewModule;
 import com.sunnybear.framework.module.BannerActivity;
+import com.sunnybear.framework.ui.BadgeTabItem;
 import com.sunnybear.framework.ui.viewpager.banner.BannerConfig;
 import com.sunnybear.framework.ui.viewpager.banner.Image;
 import com.sunnybear.framework.ui.viewpager.banner.Transformer;
@@ -19,6 +21,8 @@ import java.util.List;
  * Created by chenkai.gu on 2018/5/24.
  */
 public class ActivityBannerViewModule extends BaseViewModule<BannerActivity, ActivityBannerBinding> {
+
+    private ArrayList<BadgeTabItem> mBadgeTabItems;
 
     public ActivityBannerViewModule(BannerActivity bannerActivity, ActivityBannerBinding viewDataBinding) {
         super(bannerActivity, viewDataBinding);
@@ -47,6 +51,13 @@ public class ActivityBannerViewModule extends BaseViewModule<BannerActivity, Act
                 return mViewDataBinding.banner.dispatchTouchEvent(event);
             }
         });
+
+        mBadgeTabItems = new ArrayList<>();
+        mBadgeTabItems.add(new BadgeTabItem(R.layout.tab_notification, "9+", true, true));
+        mBadgeTabItems.add(new BadgeTabItem(R.layout.tab_activity, "9+", false, true));
+        mBadgeTabItems.add(new BadgeTabItem(R.layout.tab_interactive, "9+", false, true));
+        mBadgeTabItems.add(new BadgeTabItem(R.layout.tab_letters, "9+", false, true));
+        mViewDataBinding.setBadgeTabItems(mBadgeTabItems);
     }
 
     @Override

@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 /**
- * <p>
+ * 基础封装ViewModule
  * Created by chenkai.gu on 2018/3/9.
  */
 public abstract class BaseViewModule<T extends Presenter, VDB extends ViewDataBinding>
@@ -27,6 +29,7 @@ public abstract class BaseViewModule<T extends Presenter, VDB extends ViewDataBi
             mContext = (Context) t;
         else if (t instanceof Fragment)
             mContext = ((Fragment) t).getContext();
+        ARouter.getInstance().inject(this);
     }
 
     /**

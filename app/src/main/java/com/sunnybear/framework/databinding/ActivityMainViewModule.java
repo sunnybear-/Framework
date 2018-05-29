@@ -9,7 +9,6 @@ import android.view.Window;
 import android.widget.FrameLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
@@ -57,8 +56,6 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
     @Override
     public void init() {
         mViewDataBinding.setVm(this);
-        ARouter.getInstance().inject(this);
-
         mUserDao = (UserDao) DatabaseHelper.getDao(User.class);
 
         User user = new User("gu", "sunnybear");
@@ -105,9 +102,28 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
         switch (v.getId()) {
             case R.id.btn_map:
 //                ARouter.getInstance()
-//                        .build(Uri.parse("arouter://sunnybear/framework/map"))
-////                        .greenChannel()
-//                        .navigation();
+//                        .build("/framework/map")
+//                        .navigation(mContext, new NavigationCallback() {
+//                            @Override
+//                            public void onFound(Postcard postcard) {
+//                                Logger.i("找到了");
+//                            }
+//
+//                            @Override
+//                            public void onLost(Postcard postcard) {
+//                                Logger.i("找不到");
+//                            }
+//
+//                            @Override
+//                            public void onArrival(Postcard postcard) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onInterrupt(Postcard postcard) {
+//                                Logger.i("被拦截");
+//                            }
+//                        });
                 StartHelper.with(mContext).startActivity(BannerActivity.class);
                 break;
             case R.id.btn_service:

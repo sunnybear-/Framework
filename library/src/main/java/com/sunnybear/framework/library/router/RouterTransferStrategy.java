@@ -3,11 +3,11 @@ package com.sunnybear.framework.library.router;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.sunnybear.framework.tools.log.Logger;
 
 /**
  * 网页路由跳转策略
@@ -28,6 +28,7 @@ public class RouterTransferStrategy extends AppCompatActivity {
                      */
                     @Override
                     public void onArrival(Postcard postcard) {
+                        Logger.i(TAG, "跳转完成");
                         finish();
                     }
 
@@ -37,7 +38,7 @@ public class RouterTransferStrategy extends AppCompatActivity {
                      */
                     @Override
                     public void onLost(Postcard postcard) {
-                        Log.e(TAG, "没有找到路由目标");
+                        Logger.e(TAG, "没有找到路由目标");
                     }
 
                     /**

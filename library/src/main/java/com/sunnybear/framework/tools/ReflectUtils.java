@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.lzy.okgo.utils.OkLogger;
 
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -110,5 +111,19 @@ public final class ReflectUtils {
             }
         else//泛型为object类型
             return (Class<? extends Serializable>) generic;
+    }
+
+    /**
+     * 是否存在注解
+     *
+     * @param clazz
+     * @param annotationClass
+     * @return
+     */
+    public static boolean isExistAnnotation(Class<?> clazz, Class<? extends Annotation> annotationClass) {
+        Annotation annotation = clazz.getAnnotation(annotationClass);
+        if (annotation != null)
+            return true;
+        return false;
     }
 }

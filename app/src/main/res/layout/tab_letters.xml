@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable name="badgeItem"
+                  type="com.sunnybear.framework.ui.BadgeTabItem"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="15dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:src="@{badgeItem.select ? @drawable/icon_letters : @drawable/icon_letters_grey}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="快报"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/font_size_14"
+            app:layout_constraintEnd_toEndOf="@id/imageView"
+            app:layout_constraintStart_toStartOf="@id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/imageView"/>
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/icon_badge"
+            android:gravity="center"
+            android:text="@{badgeItem.badgeText}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_10"
+            android:visibility="@{badgeItem.badge ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

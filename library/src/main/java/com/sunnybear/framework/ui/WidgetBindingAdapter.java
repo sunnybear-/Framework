@@ -1,11 +1,15 @@
 package com.sunnybear.framework.ui;
 
 import android.databinding.BindingAdapter;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +27,7 @@ import com.sunnybear.framework.library.glide.GlideRequests;
 import com.sunnybear.framework.library.glide.ImageLoader;
 import com.sunnybear.framework.tools.log.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,5 +98,49 @@ public final class WidgetBindingAdapter {
             bottomNavigationBar.addItem(item);
         }
         bottomNavigationBar.setFirstSelectedPosition(0).initialise();
+    }
+
+    /**
+     * 设置TabLayout的Item项目
+     *
+     * @param tabLayout
+     * @param badgeItem     badgeTabItems的variable值(BR.XXXX)
+     * @param badgeTabItems
+     */
+    @BindingAdapter(value = {"android:badgeItem", "android:badgeTabItems"})
+    public static void setTabItem(TabLayout tabLayout, int badgeItem, final ArrayList<BadgeTabItem> badgeTabItems) {
+        final ArrayList<ViewDataBinding> viewDataBindings = new ArrayList<>();
+        if (badgeTabItems != null) {
+            int size = badgeTabItems.size();
+            for (int i = 0; i < size; i++) {
+                BadgeTabItem badgeTabItem = badgeTabItems.get(i);
+                ViewDataBinding viewDataBinding = DataBindingUtil
+                        .inflate(LayoutInflater.from(tabLayout.getContext()), badgeTabItem.getBadgeItemLayoutId(),
+                                null, false);
+                TabLayout.Tab tab = tabLayout.newTab();
+                tab.setCustomView(viewDataBinding.getRoot());
+                viewDataBinding.setVariable(badgeItem, badgeTabItem);
+                viewDataBindings.add(viewDataBinding);
+                tabLayout.addTab(tab);
+            }
+        }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                BadgeTabItem badgeTabItem = badgeTabItems.get(tab.getPosition());
+                badgeTabItem.setSelect(true);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                BadgeTabItem badgeTabItem = badgeTabItems.get(tab.getPosition());
+                badgeTabItem.setSelect(false);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 }
