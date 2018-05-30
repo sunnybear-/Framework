@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
 import com.sunnybear.framework.R;
+import com.sunnybear.framework.library.base.annotation.BundleInject;
 import com.sunnybear.framework.library.eventbus.EventBusMessage;
 import com.sunnybear.framework.tools.ActivityStackManager;
 import com.sunnybear.framework.tools.AppUtils;
@@ -23,6 +24,8 @@ import com.sunnybear.framework.tools.KeyboardUtils;
 import com.sunnybear.framework.tools.ResourcesUtils;
 import com.sunnybear.framework.tools.Toasty;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+
+import java.lang.reflect.Field;
 
 /**
  * 基础FragmentActivity,主管模组分发
@@ -156,6 +159,19 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
      * @param args bundle参数
      */
     protected void onBundle(Bundle args) {
+        try {
+            Field[] fields = this.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                BundleInject bundleInject = field.getAnnotation(BundleInject.class);
+                if (bundleInject != null) {
+                    String name = bundleInject.name();
+                    field.setAccessible(true);
+                    field.set(this, args.get(name));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mViewModule.onBundle(args);
     }
 

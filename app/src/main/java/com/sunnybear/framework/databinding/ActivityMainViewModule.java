@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.callback.NavigationCallback;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
@@ -16,10 +19,8 @@ import com.sunnybear.framework.R;
 import com.sunnybear.framework.dao.UserDao;
 import com.sunnybear.framework.entity.User;
 import com.sunnybear.framework.library.base.BaseViewModule;
-import com.sunnybear.framework.module.BannerActivity;
 import com.sunnybear.framework.module.MainActivity;
 import com.sunnybear.framework.provider.ARouterTestService;
-import com.sunnybear.framework.tools.StartHelper;
 import com.sunnybear.framework.tools.log.Logger;
 import com.sunnybear.library.database.DatabaseHelper;
 
@@ -101,30 +102,31 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_map:
-//                ARouter.getInstance()
-//                        .build("/framework/map")
-//                        .navigation(mContext, new NavigationCallback() {
-//                            @Override
-//                            public void onFound(Postcard postcard) {
-//                                Logger.i("找到了");
-//                            }
-//
-//                            @Override
-//                            public void onLost(Postcard postcard) {
-//                                Logger.i("找不到");
-//                            }
-//
-//                            @Override
-//                            public void onArrival(Postcard postcard) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onInterrupt(Postcard postcard) {
-//                                Logger.i("被拦截");
-//                            }
-//                        });
-                StartHelper.with(mContext).startActivity(BannerActivity.class);
+                ARouter.getInstance()
+                        .build("/framework/banner")
+                        .withString("key", "123")
+                        .navigation(mContext, new NavigationCallback() {
+                            @Override
+                            public void onFound(Postcard postcard) {
+                                Logger.i("找到了");
+                            }
+
+                            @Override
+                            public void onLost(Postcard postcard) {
+                                Logger.i("找不到");
+                            }
+
+                            @Override
+                            public void onArrival(Postcard postcard) {
+
+                            }
+
+                            @Override
+                            public void onInterrupt(Postcard postcard) {
+                                Logger.i("被拦截");
+                            }
+                        });
+//                StartHelper.with(mContext).startActivity(BannerActivity.class);
                 break;
             case R.id.btn_service:
                 mService.printToast("ARouter暴露服务");

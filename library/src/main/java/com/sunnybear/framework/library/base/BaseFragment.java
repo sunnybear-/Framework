@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sunnybear.framework.library.base.annotation.BundleInject;
 import com.sunnybear.framework.library.eventbus.EventBusMessage;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+
+import java.lang.reflect.Field;
 
 /**
  * 基础Fragment,主管模组分发
@@ -88,6 +91,19 @@ public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseV
      * @param args bundle参数
      */
     protected void onBundle(Bundle args) {
+        try {
+            Field[] fields = this.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                BundleInject bundleInject = field.getAnnotation(BundleInject.class);
+                if (bundleInject != null) {
+                    String name = bundleInject.name();
+                    field.setAccessible(true);
+                    field.set(this, args.get(name));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mViewModule.onBundle(args);
     }
 

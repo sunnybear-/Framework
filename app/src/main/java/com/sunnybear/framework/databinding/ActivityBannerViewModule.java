@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 
 import com.sunnybear.framework.R;
 import com.sunnybear.framework.library.base.BaseViewModule;
+import com.sunnybear.framework.library.base.annotation.BundleInject;
 import com.sunnybear.framework.module.BannerActivity;
+import com.sunnybear.framework.tools.log.Logger;
 import com.sunnybear.framework.ui.BadgeTabItem;
 import com.sunnybear.framework.ui.viewpager.banner.BannerConfig;
 import com.sunnybear.framework.ui.viewpager.banner.Image;
@@ -23,6 +25,9 @@ import java.util.List;
 public class ActivityBannerViewModule extends BaseViewModule<BannerActivity, ActivityBannerBinding> {
 
     private ArrayList<BadgeTabItem> mBadgeTabItems;
+
+    @BundleInject(name = "key")
+    String key;
 
     public ActivityBannerViewModule(BannerActivity bannerActivity, ActivityBannerBinding viewDataBinding) {
         super(bannerActivity, viewDataBinding);
@@ -58,6 +63,8 @@ public class ActivityBannerViewModule extends BaseViewModule<BannerActivity, Act
         mBadgeTabItems.add(new BadgeTabItem(R.layout.tab_interactive, "9+", false, true));
         mBadgeTabItems.add(new BadgeTabItem(R.layout.tab_letters, "9+", false, true));
         mViewDataBinding.setBadgeTabItems(mBadgeTabItems);
+
+        Logger.i(key);
     }
 
     @Override

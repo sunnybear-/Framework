@@ -8,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.sunnybear.framework.library.base.annotation.BundleInject;
+
+import java.lang.reflect.Field;
 
 /**
  * 基础封装ViewModule
@@ -43,7 +46,19 @@ public abstract class BaseViewModule<T extends Presenter, VDB extends ViewDataBi
      * @param args
      */
     public void onBundle(Bundle args) {
-
+        try {
+            Field[] fields = this.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                BundleInject bundleInject = field.getAnnotation(BundleInject.class);
+                if (bundleInject != null) {
+                    String name = bundleInject.name();
+                    field.setAccessible(true);
+                    field.set(this, args.get(name));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
