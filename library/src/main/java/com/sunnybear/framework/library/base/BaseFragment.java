@@ -90,7 +90,7 @@ public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseV
      *
      * @param args bundle参数
      */
-    protected void onBundle(Bundle args) {
+    void onBundle(Bundle args) {
         try {
             Field[] fields = this.getClass().getDeclaredFields();
             for (Field field : fields) {
