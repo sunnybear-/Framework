@@ -45,7 +45,7 @@ public abstract class BaseViewModule<T extends Presenter, VDB extends ViewDataBi
      *
      * @param args
      */
-    public void onBundle(Bundle args) {
+    void onBundle(Bundle args) {
         try {
             Field[] fields = this.getClass().getDeclaredFields();
             for (Field field : fields) {
