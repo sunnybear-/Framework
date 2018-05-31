@@ -84,8 +84,8 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
     @Override
     protected void onDestroy() {
         ActivityStackManager.getInstance().removeActivity(this);
-        super.onDestroy();
         getLifecycle().removeObserver(mViewModule);
+        super.onDestroy();
     }
 
     /**

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.bumptech.glide.request.target.Target;
 import com.sunnybear.framework.library.glide.GlideRequests;
 import com.sunnybear.framework.library.glide.ImageLoader;
 import com.sunnybear.framework.tools.log.Logger;
+import com.sunnybear.framework.ui.recyclerview.QuickRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,5 +144,11 @@ public final class WidgetBindingAdapter {
 
             }
         });
+    }
+
+    @BindingAdapter(value = {"android:itemDecoration"})
+    public static void addRecyclerViewItemDecoration(QuickRecyclerView quickRecyclerView, RecyclerView.ItemDecoration itemDecoration) {
+        if (itemDecoration != null)
+            quickRecyclerView.addItemDecoration(itemDecoration);
     }
 }
