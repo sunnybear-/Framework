@@ -103,7 +103,7 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
         switch (v.getId()) {
             case R.id.btn_map:
                 ARouter.getInstance()
-                        .build("/framework/banner")
+                        .build("/framework/map")
                         .withString("key", "123")
                         .navigation(mContext, new NavigationCallback() {
                             @Override

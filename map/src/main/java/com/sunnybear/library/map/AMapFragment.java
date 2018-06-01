@@ -292,6 +292,7 @@ public class AMapFragment extends SupportMapFragment
             markerOptions.icon(BitmapDescriptorFactory.fromResource(markerIcon));
         //设置marker平贴地图效果
         markerOptions.setFlat(true);
+        markerOptions.zIndex(-1);
 
         Marker marker = mAMap.addMarker(markerOptions);
 
@@ -303,7 +304,7 @@ public class AMapFragment extends SupportMapFragment
 //        marker.setAnimation(animation);
 //        marker.startAnimation();
 
-        mMarkers.add(marker);
+//        mMarkers.add(marker);
     }
 
     /**
@@ -337,6 +338,16 @@ public class AMapFragment extends SupportMapFragment
             mMarkers.clear();
             mMapView.invalidate();//刷新地图
         }
+    }
+
+    public List<Marker> getScreenMarkers() {
+        if (mAMap != null)
+            return mAMap.getMapScreenMarkers();
+        return null;
+    }
+
+    public List<Marker> getMarkers() {
+        return mMarkers;
     }
 
     /**

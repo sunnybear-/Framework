@@ -3,6 +3,7 @@ package com.sunnybear.library.database;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
@@ -23,7 +24,7 @@ public class DatabaseHelper {
         return mDatabase;
     }
 
-    private DatabaseHelper(Context context, Class<? extends RoomDatabase> clazz, String databaseName) {
+    private DatabaseHelper(Context context, Class<? extends RoomDatabase> clazz, String databaseName, Migration... migrations) {
         mDatabase = Room.databaseBuilder(context, clazz, databaseName)
                 .addCallback(new RoomDatabase.Callback() {
                     /**
@@ -45,7 +46,7 @@ public class DatabaseHelper {
                     }
                 })
 //                .allowMainThreadQueries()//允许在主线程查询数据
-//                .addMigrations()//迁移数据库使用,下面会单独拿出来讲
+                .addMigrations(migrations)//迁移数据库使用,下面会单独拿出来讲
 //                .fallbackToDestructiveMigration()//迁移数据库如果发生错误,将会重新创建数据库,而不是发生崩溃
                 .build();
     }
@@ -56,12 +57,13 @@ public class DatabaseHelper {
      * @param context
      * @param clazz
      * @param databaseName
+     * @param migrations
      */
-    public static void initialize(Context context, Class<? extends RoomDatabase> clazz, String databaseName) {
+    public static void initialize(Context context, Class<? extends RoomDatabase> clazz, String databaseName, Migration... migrations) {
         if (INSTANCE == null)
             synchronized (DatabaseHelper.class) {
                 if (INSTANCE == null)
-                    INSTANCE = new DatabaseHelper(context, clazz, databaseName);
+                    INSTANCE = new DatabaseHelper(context, clazz, databaseName, migrations);
             }
     }
 

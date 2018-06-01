@@ -28,6 +28,10 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapVie
 
     private AMapFragment mAMapFragment;
 
+    public AMapFragment getAMapFragment() {
+        return mAMapFragment;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_map;
@@ -42,7 +46,6 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapVie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("地图");
-        mViewModule.init();
         mAMapFragment = (AMapFragment) ARouter.getInstance()
                 .build(Constant.ROUTER_MAP, Constant.GROUP)
                 .withInt(AMapFragment.KEY_DRAWABLE_LOCATION, R.mipmap.icon_location2)
@@ -62,6 +65,8 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapVie
                 for (RegeocodeRoad road : roads) {
                     Logger.i(road.getName());
                 }
+                List<Marker> markers = mAMapFragment.getScreenMarkers();
+                Logger.i(markers);
             }
 
             @Override
@@ -76,5 +81,6 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapVie
                 mAMapFragment.showTrafficEnabled(true);
             }
         });
+        mViewModule.init();
     }
 }
