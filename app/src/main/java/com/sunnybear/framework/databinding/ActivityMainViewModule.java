@@ -108,22 +108,22 @@ public class ActivityMainViewModule extends BaseViewModule<MainActivity, Activit
                         .navigation(mContext, new NavigationCallback() {
                             @Override
                             public void onFound(Postcard postcard) {
-                                Logger.i("找到了");
+                                Logger.i("interceptor", "找到了");
                             }
 
                             @Override
                             public void onLost(Postcard postcard) {
-                                Logger.i("找不到");
+                                Logger.i("interceptor", "找不到");
                             }
 
                             @Override
                             public void onArrival(Postcard postcard) {
-
+                                Logger.i("interceptor", "路由已到达");
                             }
 
                             @Override
                             public void onInterrupt(Postcard postcard) {
-                                Logger.i("被拦截");
+                                Logger.i("interceptor", "被拦截");
                             }
                         });
 //                StartHelper.with(mContext).startActivity(BannerActivity.class);
