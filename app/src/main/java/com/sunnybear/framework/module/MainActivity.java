@@ -10,7 +10,7 @@ import com.sunnybear.framework.databinding.ActivityMainViewModule;
 import com.sunnybear.framework.library.base.BaseActivity;
 import com.sunnybear.framework.tools.ResourcesUtils;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, ActivityMainViewModule> {
+public class MainActivity extends BaseActivity<ActivityMainViewModule, ActivityMainBinding> {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;

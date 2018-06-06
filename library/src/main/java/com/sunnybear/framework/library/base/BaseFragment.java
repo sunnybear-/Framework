@@ -19,7 +19,7 @@ import java.lang.reflect.Field;
  * 基础Fragment,主管模组分发
  * Created by chenkai.gu on 2018/1/14.
  */
-public abstract class BaseFragment<VDB extends ViewDataBinding, VM extends BaseViewModule> extends RxFragment implements Presenter {
+public abstract class BaseFragment<VM extends BaseViewModule, VDB extends ViewDataBinding> extends RxFragment implements Presenter {
 
     private View mFragmentView = null;
 

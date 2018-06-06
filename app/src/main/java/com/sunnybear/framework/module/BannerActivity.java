@@ -18,7 +18,7 @@ import com.sunnybear.framework.tools.log.Logger;
  * Created by chenkai.gu on 2018/5/24.
  */
 @Route(path = "/framework/banner")
-public class BannerActivity extends BaseActivity<ActivityBannerBinding, ActivityBannerViewModule> {
+public class BannerActivity extends BaseActivity<ActivityBannerViewModule, ActivityBannerBinding> {
 
     @Autowired
     User mUser;

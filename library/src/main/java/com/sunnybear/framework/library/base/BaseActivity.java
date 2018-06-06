@@ -31,7 +31,7 @@ import java.lang.reflect.Field;
  * 基础FragmentActivity,主管模组分发
  * Created by chenkai.gu on 2018/1/14.
  */
-public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseViewModule> extends RxAppCompatActivity
+public abstract class BaseActivity<VM extends BaseViewModule, VDB extends ViewDataBinding> extends RxAppCompatActivity
         implements Presenter {
 
     protected Context mContext;

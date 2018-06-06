@@ -12,7 +12,6 @@ import com.sunnybear.framework.R;
 import com.sunnybear.framework.databinding.ActivityMapBinding;
 import com.sunnybear.framework.databinding.ActivityMapViewModule;
 import com.sunnybear.framework.library.base.BaseActivity;
-import com.sunnybear.framework.tools.StartHelper;
 import com.sunnybear.framework.tools.log.Logger;
 import com.sunnybear.library.map.AMapFragment;
 import com.sunnybear.library.map.Constant;
@@ -24,7 +23,7 @@ import java.util.List;
  * Created by chenkai.gu on 2018/5/9.
  */
 @Route(path = "/framework/map")
-public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapViewModule> {
+public class MapActivity extends BaseActivity<ActivityMapViewModule, ActivityMapBinding> {
 
     private AMapFragment mAMapFragment;
 
@@ -72,8 +71,6 @@ public class MapActivity extends BaseActivity<ActivityMapBinding, ActivityMapVie
             @Override
             public void onMarkerClick(Marker marker) {
                 Logger.i(marker);
-                StartHelper.with(mContext)
-                        .startActivity(WebActivity.class);
             }
 
             @Override
