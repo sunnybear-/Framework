@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:gravity="center"
-    android:minHeight="?attr/actionBarSize"
+    android:minHeight="?android:attr/actionBarSize"
     android:navigationIcon="@drawable/icon_arrow_back_white"
     app:navigationIcon="@drawable/icon_arrow_back_white"
     app:theme="@style/AppTheme.AppBarOverlay">

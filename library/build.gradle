@@ -17,6 +17,7 @@ android {
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
+        disable 'PrivateResource'
     }
 }
 
